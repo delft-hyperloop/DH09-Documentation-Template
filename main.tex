@@ -1,0 +1,62 @@
+\documentclass[
+    % Base class, can be `article`, `report` or `book`.
+    report,
+    % When done and ready to submit the document, uncomment the following
+    % line, to make the todo notes and TODO list at the end disappear, as well as remove the guidelines and template introduction chapters, and then finally render.
+    % final,
+]{delft-hyperloop}
+
+\addbibresource{refs.bib}
+
+\input{syms}
+\input{meta}
+
+
+\emergencystretch 3em
+\begin{document}
+
+\begin{frontmatter}
+\maketitle
+
+% ===================================
+% ======== Guidelines ===============
+% ===================================
+% General guidelines on how to use this template as well as latex do's and dont's
+% PLEASE READ THROUGH EVERYTHING BEFORE STARTING TO WRITE. If you don't you will receive the sexcon curse (no sex forever) 
+
+% Do not delete the guidelines or how-to-template files from the project, they might come in handy later!
+
+\ifnotfinal{\templateguidelines}
+\end{frontmatter}
+
+\begin{mainmatter}
+\tableofcontents
+% ===================================
+% ======== Main matter ==============
+% ===================================
+% Input any main matter files in the mainmatter/index.tex file.
+\input{mainmatter/index}
+\end{mainmatter}
+
+\begin{backmatter}
+\printbibliography[heading=bibintoc, title=References]
+
+\begin{appendices}
+    % ===================================
+    % ======== Appendices ===============
+    % ===================================
+    % Add other appendix chapters in the appendix/index.tex file.
+ 
+    \input{appendix/index}
+
+
+    % If not FINAL, include the list of TODOs as a separate chapter.
+    % Make sure you address all the points before submitting.
+    \ifnotfinal{\appendixtodolistchapter}
+
+    \printunsrtglossary[type=main]
+    \printunsrtglossary[type=\acronymtype]
+\end{appendices}
+\end{backmatter}
+
+\end{document}

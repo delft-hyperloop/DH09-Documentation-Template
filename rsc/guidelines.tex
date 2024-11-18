@@ -1,0 +1,243 @@
+\chapter*{Consistency Guidelines}
+\label{chapter:template-guidelines}
+These guidelines aim to develop consistency in report layout, use of English, and use of LaTeX. For any questions, remarks or suggestions on the guideline, please contact Dinu/Pablo.
+
+\section*{On General Consistency}
+\label{sec:general-consistency}
+\begin{enumerate}[label=G.\arabic*]
+    \item Use American English for documenting/reporting. 'z' not 's'!
+    \item When referring to ourselves, say "the team" or "DH09", not "me", "us", etc.
+    \item Write everything in impersonal English ("this was analyzed" rather than "we analyzed this"). It's kind of annoying to write but much more professional.
+    \item Do not use abbreviations for verbs, write out in full 'is not' or 'cannot'.
+    \item End sentences with a dot, even in figures, lists, captions, and tables. Chapter and section titles are the exception.
+    \item Do not use 'he/she'. Try to use alternatives or use 'they' if appropriate.
+    \item Each identifier (e.g. for a requirement) should be unique. %You can make use of \verb|[label=ABC\arabic*]|.
+    \item Capitalize words in section and chapter titles, except articles, prepositions, and conjunctions (the, and, or, for, etc.). The first word is always capitalized.
+    \item You can use \verb|\restoregeometry| to fix layout after inserting an A3 page.
+    \item If colors have meaning, add color-coding (i.e. legend) for colorblind accessibility.
+    \item Use \verb|\,| to get a space in large numbers, like 100\,000 (instead of 100 000) (it's stupid i know but it looks nice).
+    \item Add abbreviations to the nomenclature table. \unsure{do we want nomenclature?}
+    \item Paragraphs should be ended with a \textbf{??????????????} \unsure{how are we doing that}
+\end{enumerate}
+\section*{On Label Consistency} \label{sec:label-consistency}
+\begin{enumerate}[label=L.\arabic*]
+    \item Set a unique and \textbf{\textit{describing}} label for each new element (chapters, figures, tables...). Generally, chapters/section labels should be the same as the chapter/section title and figures/tables should describe their contents in a few words (2-3 is good).
+    \item DO NOT USE SPACES OR '\&' IN YOUR LABELS. SEPARATE WORDS BY '-'. 
+    \item The standard word to be used at the start of the label for different types of elements is: 
+    \begin{enumerate}[label*=.\arabic*]
+        \item \textit{chapter:} for chapter.
+        \item \textit{appendix:} for appendix chapter.
+        \item \textit{sec:} for section.
+        \item \textit{subsec:} for subsection.
+        \item \textit{tab:} for table.
+        \item \textit{fig:} for figure.
+        \item \textit{subfig:} for subfigure.
+        \item \textit{note:} for a footnote. Labels for footnotes are optional.
+    \end{enumerate}
+    \item Use \verb|\autoref{label-here}| to reference elements. Do \textbf{not} use \verb|\ref{label-here}| (autoref automatically writes "Figure" or "Table" in the correct format).
+    \item You can also use \verb|\nameref{label-here}| to reference items by their name, as opposed to their number, if it adds clarity.
+\end{enumerate}
+
+\section*{On Math Notation Consistency}
+\label{sec:math-consistency}
+\begin{enumerate}[label=M.\arabic*]
+    \item USE \verb|'\cdot'| (result: $\cdot$), NOT '*' OR '·'. IF YOU DON'T I WILL PERSONALLY CHASE YOU DOWN. It is also allowed to use \verb|\times| (result: $\times$) if needed, but it isn't the standard.
+    \item Use \$ \$ or \verb|\( \)|for math notation in text.
+    \item Use \verb|\begin{equation} \end{equation}| for equations/longer math notation.
+    \item Units should not have square brackets, but instead use normal text (and any math text if necessary, e.g. squared units). Correct: 5 m\(^2\). Incorrect: 5 [$m^2$].
+    \item Use \verb|\text{}| if units or other text should appear in an equation. E.g. $ \vec{\dot{x}} = \text{A} \vec{x} + \text{B} \vec{u} + \text{some txt} \cdot 1000$
+    \item For short units, you can use slash, m/s. For longer units, use negative powers, kg m\(^2\)s\(^{-2}\).
+    \item Add symbols to the nomenclature. \unsure{nomenclature again}
+\end{enumerate}
+
+\section*{On Table Consistency}
+\label{sec:table-consistency}
+\begin{enumerate}[label=T.\arabic*]
+    \item Start and end the table body with a double rule using \verb|\hhline{===}|. The number of '\verb|=|' corresponds to the number of columns in the table. See \autoref{tab:example} as an example.
+    
+    \item For tables, the caption goes above the body (which means the \verb|\caption| command goes before the \verb|\begin{tabular}| command).
+    \item Table headers (first row) should be in boldface, use \verb|\textbf{}|.
+    \item The best way to make tables easily is to use a latex table generator (I use \href{https://www.tablesgenerator.com/}{{blue}{{this page}}}).
+    \item When defining columns (next to \verb|\begin{tabular}|), use \verb|l|, \verb|c|, or \verb|r| for left, center, or right text alignment of the column. The width of the column is automatically set by \LaTeX. See the source code of \autoref{tab:example} for an example.
+    \item If you want to have custom width for the columns, use \verb|L/R/C{0.1\linewidth}| (choose a letter depending on text alignment) in the definition of your columns. Replace 0.1 with whatever percentage of the linewidth you want to set. See the source code of \autoref{tab:example} for an example.
+    \item Put \verb|[tph]| after \verb|\begin{table}| to make the table appear exactly where you placed it and not somewhere random.
+\end{enumerate}
+\begin{table}[tph]
+    \centering
+    \caption{This is my caption.} % Caption on top of \begin{tabular}
+    \label{tab:example}
+    \begin{tabular}{L{0.1\linewidth} C{0.4\linewidth} r} % 1st column: 10% of line width, text aligned left; 2nd column: 40% of line width, text is centered; 3rd column: automatic width, text aligned right
+        \hhline{===} % Double line, three columns -> three = signs
+        \textbf{A} & \textbf{B} & \textbf{C}   \\ \hline % Bold table headers, \hline after headers
+        D & E & F   \\
+        G & H & I   \\
+        \hhline{===}
+    \end{tabular}
+\end{table}
+
+\section*{On Figure Consistency}
+\label{sec:figure-consistency}
+\begin{enumerate}[label=F.\arabic*]
+    \item For figures, the caption goes under the figure.
+    \item Use SI-units on the axis of graphs, unless other units (e.g. km/h) add value/clarity to the graph.
+    \item To resize an image use \verb|\includegraphics[width=X\textwidth]{img.png}|, where X is the percentage of text width you want the image to take up.
+    \item If you know a figure needs to be there but you don't have it yet, type \verb|example-image|, \verb|example-image-a|, \verb|example-image-b|, or \verb|example-image-c| for a placeholder (see \autoref{fig:example-image} for an example).
+    \item For side-by-side figures, use the \verb|\begin{subfigure}| command. Copy-paste the template from \autoref{fig:subfig-example}.
+\end{enumerate}
+
+\begin{figure}[tph]
+    \centering
+    \includegraphics[width=0.5\linewidth]{example-image} % Image takes 50% of text, but it can be adjusted
+    \caption{Caption for figure.}
+    \label{fig:example-image}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.3\textwidth} % The subfigure takes 30% of the text
+    \centering
+    \includegraphics[width=\textwidth]{example-image-a} % Don't adjust this width
+    \caption{Caption A.}            % Caption for the subfigure
+    \label{subfig:subfig-example-a} % Label for the subfigure
+    \end{subfigure}
+    % add an empty line to create a new row of images
+
+    \begin{subfigure}{0.2\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{example-image-a}
+    \caption{Caption A.}
+    \label{subfig:subfig-example-a-repeated}
+    \end{subfigure}
+    \hfill % add \hfill to distribute the images evenly across the width of the page
+    \begin{subfigure}{0.2\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{example-image-b}
+    \caption{Caption B.}
+    \label{subfig:subfig-example-b}
+    \end{subfigure}
+    \hfill 
+    \begin{subfigure}{0.2\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{example-image-c}
+    \caption{Caption C.}
+    \label{subfig:subfig-example-c}
+    \end{subfigure}
+
+    % ... (add more if needed).
+    \caption{Caption for all sub-figures.}  % Caption for the figure as a whole
+    \label{fig:subfig-example}              % Label for the figure as a whole
+\end{figure}
+
+\section*{On Use of Sources}
+\begin{enumerate}[label=SO.\arabic*]
+    \item Follow the IEEE guidelines.
+    \item Example of a bibtex citation \cite{WinNT}: (find more documentation \href{https://bibtex.eu/types/}{\color{blue}{\underline{here}}} and \href{https://www.overleaf.com/learn/latex/Bibliography_management_with_bibtex}{\color{blue}{\underline{here}}})
+
+\begin{verbatim}
+@techreport{FDD_DH08, 
+ author = {DH08}, 
+ title = {Final Design Document}, 
+ month = "December", 
+ year  = "2023", 
+ type  = "Technical Report", 
+}
+\end{verbatim}
+    \item For citing webpages use the \verb|@online| type:
+    \begin{verbatim}
+@online{WinNT,
+  author = {MultiMedia LLC},
+  title = {{MS Windows NT} Kernel Description},
+  year = 1999,
+  url = {http://web.archive.org/web/20080207010024/http://www.808multimedia.com/winnt/kernel.htm},
+  urldate = {2010-09-30}
+}
+\end{verbatim}
+\end{enumerate}
+\section*{On department-specific sources in the template} \label{sec:deptartment-specific-sources}
+
+Every single department has its own file under \textit{rsc/depts/}, which they can modify as they see fit. In order to prevent incompatibilities with the template itself and/or other departments, please stick to the following guidelines:
+
+\begin{enumerate}[label=DSS.\arabic*]
+    \item You can change the list of names in the respective department file. 
+    \item All exported commands and environments should start with the name of the department. For example: \verb|\newcommand{\levitationtable}|, \verb|\newcommand{\powertrainpin}|. Unambiguous abbreviations of the departments are also allowed here, instead of the full name.
+    \item All commands used internally have the naming requirements from DSS.1. It is allowed to use \verb|\makeatletter| and have those commands used internally start with the \textit{at} character (\textit{@}), before the department name. In the examples above: \verb|\@levitationtable| or \verb|\@powertrainpin|.
+\end{enumerate}
+
+
+\section*{Useful templates}
+\begin{itemize}
+    \item Figure: \improvement{can these be added as commands? (so that you type "/figure" and this template shows up?}
+    \begin{figure}[tph]
+        \centering
+        \includegraphics[width=0.5\linewidth]{example-image}
+        \caption{Template of a Figure}
+        \label{fig:descriptive-label}
+    \end{figure}
+    
+    \item 2 Subfigures (works with both images and tables):
+    \begin{figure}[tph]
+        \centering
+        \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{example-image-a} % Don't adjust this width
+        \caption{Caption A.}            % Caption for the subfigure
+        \label{subfig:subfig-example-a} % Label for the subfigure
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{example-image-b}
+        \caption{Caption B.}
+        \label{subfig:subfig-example-b}
+        \end{subfigure}
+        \hfill 
+    \caption{Caption for all sub-figures. Also works with tables (use subtable)}  % Caption for the figure as a whole
+    \label{fig:subfig-example}              % Label for the figure as a whole
+    \end{figure}
+    
+    \item 3 Subfigures (can be images or tables):
+    \begin{figure}[tph]
+        \centering
+        \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{example-image-a} % Don't adjust this width
+        \caption{Caption A.}            % Caption for the subfigure
+        \label{subfig:subfig-example-a} % Label for the subfigure
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{example-image-b}
+        \caption{Caption B.}
+        \label{subfig:subfig-example-b}
+        \end{subfigure}
+        \hfill 
+        \begin{subtable}[b]{0.3\textwidth}
+            \begin{tabular}{L{0.1\linewidth} C{0.4\linewidth} r}
+            \hhline{===} 
+            \textbf{A} & \textbf{B} & \textbf{C}   \\ \hline 
+            D & E & F   \\
+            G & H & I   \\
+            \hhline{===}
+            \end{tabular}
+            \caption{Caption C}
+          \label{table:table}
+      \end{subtable}
+    \caption{Caption for all sub-figures.}  % Caption for the figure as a whole
+    \label{fig:subfig-example}              % Label for the figure as a whole
+    \end{figure}
+    
+    \item Wrapfigure (text wraps around it):
+    
+    \begin{wrapfigure}{r}{0.4\linewidth}
+        \centering
+        \includegraphics[width=0.4\linewidth]{example-image}
+        \caption{Template of a Wrap Figure}
+        \label{fig:descriptive-label}
+    \end{wrapfigure}
+    \lipsum[1]
+    \item Table:
+    \item A3 (vertical):
+    \item A3 (horizontal):
+    \item 2 columns:
+\end{itemize}

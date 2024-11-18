@@ -1,0 +1,57 @@
+\chapter*{How to use the template}
+There's a couple of nice things that the template provides. You cannot use them unless you know about them, so I'll try to describe them briefly here.
+
+\section*{File folder structure}
+Ignore everything in the \verb|rsc| folder, except if you wanna update department names or add new department-specific commands. This is where the template code itself lies. If you want to add department-specific commands, declare them in \verb|rsc/depts/<department>.tex|, and then use them. \textbf{Make sure to follow the department-specific sources in the template rules (\nameref{sec:deptartment-specific-sources})}.
+
+All metadata about the document (title, authors, abstract, confidentiality) is located in the \verb|meta.tex|. 
+
+Use the \verb|mainmatter/contents| folder to add all your .tex files full of your cool content. It is recommended to have 1 file per chapter. Then, add these into the \verb|mainmatter/index.tex| file using \verb|\input{mainmatter/contents/Introduction}|.
+
+The \verb|index.tex| file might seem like a stupid way of doing it but the reason behind this is that \verb|main.tex| then becomes independent of the document and can be updated very easily. We like no dependencies!
+
+All figures should be added in the \verb|figures| folder inside mainmatter. You can later reference them as \verb|\includegraphics{mainmatter/figures/beautiful figure.png}|. 
+
+Finally, the appendix folder should contain all appendices. There's an \verb|index.tex| in this folder which works the same way as for the mainmatter.
+
+
+\section*{Adding references}
+
+References are managed with the BibTex package. References should be added to the \verb|refs.bib| file. There are lots of reference types, you can check them all in \url{https://bibtex.eu/types/}. Use \verb|\cite{reference}| in your text to reference something in the \verb|refs.bib| file. Make sure that the entry is correct, otherwise it won't compile correctly. 
+
+\section*{Use of packages}
+
+There are tons of packages already included in this template. You can check them all in \verb|rsc/delft-hyperloop.cls|. If you need to add a new package, add it there with the command \verb|\Requirepackage{some_package}|. Also tell Dinu/Pablo/Daniel about this so that we update the template itself. If you don't, you risk this new package not being added in future iterations of the template, which might break your document in the future. So please do it!!
+
+\section*{Final version}
+
+Once the document is ready to be sent to the public, you can uncomment the \verb|% final,| line at the top of \verb|main.tex||. This removes all the guidelines above, this chapter on how to use the template, as well as all the TODO notes, and the final list of TODOs from the appendix, so the document is ready for submission. Do this whenever you want to save the PDF file in Sharepoint and/or send it to external parties.
+
+
+\section*{TODO notes}
+
+The template defines the following todo note commands. Here's what they look like:
+
+\vspace{5em}
+
+\verb|\todo{...}|: Make vacuum work \todo{Aren't we kind of like a MagLev train?}
+
+\vspace{5em}
+
+\verb|\unsure{...}|: Propulsion this year will make us go faster than the speed of light. \unsure{Yeah I don't really know about that.}
+
+\vspace{5em}
+
+\verb|\change{...}|: The Earth is flat. \change{We know the Earth is round now.}
+
+\vspace{5em}
+
+\verb|\info{...}|: Something non-trivial. \info{Use this to inform people about why.}
+
+\vspace{5em}
+
+\verb|\improvement{...}|: $1+1=3$\improvement{Define $+$ such that this is true.}
+
+\vspace{5em}
+
+What makes this useful is that you also get a list of all the TODO notes in the document in an appendix, as long as you're not compiling the final version. You can see an example of that on the last page of this pdf. This allows you to quickly find and fix all of the comments.
