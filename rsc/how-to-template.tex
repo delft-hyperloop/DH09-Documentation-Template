@@ -55,3 +55,21 @@ The template defines the following todo note commands. Here's what they look lik
 \vspace{5em}
 
 What makes this useful is that you also get a list of all the TODO notes in the document in an appendix, as long as you're not compiling the final version. You can see an example of that on the last page of this pdf. This allows you to quickly find and fix all of the comments.
+
+\section*{How to update the template}
+
+\textbf{\color{red} To make sure nothing breaks, start by noting down the current version of the template! You can find it on the title page if compiling in non final mode.}
+
+Go to \href{https://github.com/delft-hyperloop/DH09-Documentation-Template/releases}{\color{HyperloopGreen} the documentation template repository}, and grab the latest release.
+
+Unzip it into a folder somewhere on your computer, then open the Overleaf project where you wish to update the template, Upload, select a folder on your computer, then select the folder where everything was unzipped. You should have a new folder in overleaf containing the new contents of the \verb|rsc|, \verb|main.tex| and \verb|delft-hyperloop.cls|. What you should do now, is overwrite the old files, and you can do so by deleting \verb|main.tex|, \verb|delft-hyperloop.cls| and the old top-level \verb|rsc| folder. Then use drag and drop to move the new versions of \verb|main.tex|, \verb|delft-hyperloop.cls| and \verb|rsc| to the top directory in Overleaf.
+
+The list of moves should typically involve (assuming \verb|DH09 Documentation Template| is the name of the folder where the new files were updated):
+
+\begin{itemize}
+    \item \verb|DH09 Documentation Template/main.tex| $\to$ \verb|main.tex|
+    \item \verb|DH09 Documentation Template/delft-hyperloop.cls| $\to$ \verb|delft-hyperloop.cls|
+    \item \verb|DH09 Documentation Template/rsc| $\to$ \verb|rsc|
+\end{itemize}
+
+\textbf{If stuck somewhere, ask Dinu for help.}
