@@ -33,3 +33,5 @@ jobs:
           body="Version at $(date +%Y%m%d.%H%M%S)"
           zip_file="${{ steps.prepare.outputs.zip }}"
           gh release create "$tag" --title "$tag" --notes "$body" "$zip_file#Template"
+        env:
+          GH_TOKEN: ${{ github.token }}
