@@ -1,0 +1,35 @@
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+jobs:
+  createRelease:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set tag name
+        id: tag
+        run: |
+          if [[ "${{ github.event_name }}" != "push" ]]; then
+            tag=v$(date +%Y%m%d.%H%M%S)
+          else
+            tag=$(basename "${{ github.ref }}")
+          fi
+          echo "tag=$tag" >> $GITHUB_OUTPUT
+      - name: Prepare release
+        id: prepare
+        run: |
+          tag="${{ steps.tag.outputs.tag }}"
+          zip_file="outputs/template-$tag.zip"
+          mkdir outputs
+          zip -r $zip_file rsc/ delft-hyperloop.cls main.tex
+          echo "zip_file=$zip_file" >> $GITHUB_OUTPUT
+      - name: Create release
+        run: |
+          tag="${{ steps.tag.outputs.tag }}"
+          body="Version at $(date +%Y%m%d.%H%M%S)"
+          zip_file="${{ steps.prepare.outputs.zip }}"
+          gh release create "$tag" --title "$tag" --notes "$body" "$zip_file#Template"
