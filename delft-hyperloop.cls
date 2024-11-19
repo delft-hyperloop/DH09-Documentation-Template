@@ -41,7 +41,6 @@
 
 \RequirePackage[a4paper,top=1in,bottom=1in,left=1.25in,right=1.25in,marginparwidth=\@marginparwidth]{geometry}
 
-
 \RequirePackage[english]{babel}
 \RequirePackage{array}
 \RequirePackage[dvipsnames]{xcolor}
@@ -72,6 +71,9 @@
 \RequirePackage[record,acronym,toc,hyperfirst]{glossaries-extra}
 \RequirePackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \RequirePackage[left, pagewise]{lineno}
+\RequirePackage{minted}
+% \RequirePackage{filecontentsdef}
+\RequirePackage{fancyvrb}
 
 \makeindex
 
@@ -228,9 +230,9 @@
 % ===== Page style =========
 % ==========================
 
-\newcommand\@pageidxfrontmatter{F:\thepage\ of F:\pageref{LastPageFrontmatter}}
+\newcommand\@pageidxfrontmatter{\thepage\ of \pageref{LastPageFrontmatter}}
 \newcommand\@pageidxmainmatter{\thepage\ of \pageref{LastPageMainmatter}}
-\newcommand\@pageidxbackmatter{B:\thepage\ of B:\pageref{LastPage}}
+\newcommand\@pageidxbackmatter{\thepage\ of \pageref{LastPage}}
 
 \newcommand\@pageidx{
     \ifdefstring{\@docpart}{frontmatter}{
@@ -252,6 +254,7 @@
       \fancyhead{} % clear all header fields
       \fancyhead[C]{\textbf{\@title}}
       \fancyfoot{} % clear all footer fields
+      \fancyfoot[L]{\ifnotfinal{\hyperref[chapter:useful-templates]{\color{HyperloopGreen} Go to useful templates}}}
       \fancyfoot[R]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
@@ -265,6 +268,7 @@
       \fancyhf{}%
       \fancyfoot[R]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
+      \fancyfoot[L]{\ifnotfinal{\hyperref[chapter:useful-templates]{\color{HyperloopGreen} Go to useful templates}}}
       \renewcommand\headrulewidth{0pt}% Line at the header invisible
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
     }
@@ -277,6 +281,7 @@
       \fancyfoot{} % clear all footer fields
       \fancyfoot[LE,RO]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
+      \fancyfoot[LO,RE]{\ifnotfinal{\hyperref[chapter:useful-templates]{\color{HyperloopGreen} Go to useful templates}}}
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
     
       \fancyhead[LE]{\nouppercase{\rightmark\hfill\leftmark}}
@@ -289,6 +294,7 @@
       \fancyhf{}%
       \fancyfoot[LE,RO]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
+      \fancyfoot[LO,RE]{\ifnotfinal{\hyperref[chapter:useful-templates]{\color{HyperloopGreen} Go to useful templates}}}
       \renewcommand\headrulewidth{0pt}% Line at the header invisible
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
     }
@@ -297,7 +303,7 @@
 \ifthenelse{\equal{\@baseclass}{book}}{\@twosidedpagestyles}{
     \ifthenelse{\equal{\@baseclass}{report}}{\@onesidedpagestyles}{
         \ifthenelse{\equal{\@baseclass}{article}}{\@onesidedpagestyles}{
-            \ClassError{delft-hyperloop}{Unrecognized baseclass: "\@baseclass"}{Ask Dinu for help.}
+            \@error{Unrecognized baseclass: "\@baseclass"}
         }
     }
 }
@@ -359,19 +365,22 @@
 \newbool{@mainmatterdefined}
 
 \newcommand\@beginfrontmattercommons{
-    \pagenumbering{roman}
+    \setcounter{page}{1}
+    \grenewcommand{\thepage}{F:\roman{page}}
     \grenewcommand\@docpart{frontmatter}
 }
 \newcommand\@beginmainmattercommons{
     \dolinenumbers
-    \pagenumbering{arabic}
+    \setcounter{page}{1}
+    \grenewcommand{\thepage}{\arabic{page}}
     \grenewcommand\@docpart{mainmatter}
 
     \phantomsection \label{BeginMainMatter}
 }
 \newcommand\@beginbackmattercommons{
     \grenewcommand\@docpart{backmatter}
-    \pagenumbering{arabic}
+    \setcounter{page}{1}
+    \grenewcommand{\thepage}{B:\arabic{page}}
 }
 
 \newcommand\@endfrontmattercommons{
@@ -499,13 +508,36 @@
 % ====== Template guidelines ======
 % =================================
 \newcommand\templateguidelines{
-    \part*{About the \TeX\ \& \LaTeX\ Template}
+    \part*{About the \TeX\ \& \LaTeX\ Template
+    \\[\bigskipamount] \large \color{blue} You can uncomment the \textit{final,} line at the top of \textit{main.tex} to remove this. \\ \color{red} If this is your first time using the template, please read through this whole part before changing anything.}
     \input{rsc/changelog}
     \input{rsc/guidelines}
     \input{rsc/how-to-template}
+
+    \chapter*{Useful templates} \label{chapter:useful-templates}
+    \addcontentsline{toc}{chapter}{Useful templates}
+    \@renderusefultemplates
     \vfill
     \begin{center}
     \fontsize{1000}{20}\selectfont \textbf{Finalize the document to remove this.}
     \change{Finalize and uncomment the \textit{final,} line at the top of \textit{main.tex}.}
     \end{center}
 }
+
+\newcommand\@codeandoutput[3]{%
+    \begin{listing}[!ht]
+        \inputminted{tex}{#1.tex}
+        \caption{#3}
+        \label{listing:#2}
+    \end{listing}
+    \input{#1}
+}
+
+% \newcommand\codeandoutput[1]{
+%     \begin{minted}{tex}
+%     \unexpanded{#1}
+%     \end{minted}
+%     {#1}
+% }
+
+\input{rsc/useful-templates}

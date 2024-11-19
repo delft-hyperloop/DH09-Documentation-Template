@@ -1,0 +1,118 @@
+\makeatletter
+\newcounter{usefultemplate}
+\newcommand\@defusefultemplate[1]{
+    \@namedef{usefultemplatetitle\theusefultemplate}{#1}
+    \stepcounter{usefultemplate}
+}
+\newcommand\@renderusefultemplates{
+    \@makecount{renderusefultemplatescnt}
+    \whiledo{\value{renderusefultemplatescnt}<\value{usefultemplate}}{
+        \ifthenelse{\value{renderusefultemplatescnt}=0}{}{\newpage}
+        \section*{\@nameuse{usefultemplatetitle\therenderusefultemplatescnt}}
+        \addcontentsline{toc}{section}{\@nameuse{usefultemplatetitle\therenderusefultemplatescnt}}
+        \@codeandoutput{__useful_templates-\therenderusefultemplatescnt}{useful-templates-\therenderusefultemplatescnt}{Code listing for \@nameuse{usefultemplatetitle\therenderusefultemplatescnt}}
+        \stepcounter{renderusefultemplatescnt}
+    }
+}
+
+\begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+\begin{figure}[tph]
+    \centering
+    \includegraphics[width=0.5\linewidth]{example-image}
+    \caption{Template of a Figure}
+    \label{fig:descriptive-label}
+\end{figure}
+\end{filecontents*}
+\@defusefultemplate{Figure}
+
+\begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+\begin{figure}[tph]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+    \centering
+    % Don't adjust this width
+    \includegraphics[width=\textwidth]{example-image-a}
+    % Caption for the subfigure
+    \caption{Caption A.}
+    % Label for the subfigure
+    \label{subfig:subfig-example-a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{example-image-b}
+    \caption{Caption B.}
+    \label{subfig:subfig-example-b}
+    \end{subfigure}
+    \hfill 
+% Caption for the figure as a whole
+\caption{Caption for all sub-figures. Also works with tables (use subtable)}
+% Label for the figure as a whole
+\label{fig:subfig-example}
+\end{figure}
+\end{filecontents*}
+\@defusefultemplate{2 Subfigures (works with both images and tables)}
+
+\begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+\begin{figure}[tph]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{example-image-a} % Don't adjust this width
+    \caption{Caption A.}            % Caption for the subfigure
+    \label{subfig:subfig-example-a} % Label for the subfigure
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{example-image-b}
+    \caption{Caption B.}
+    \label{subfig:subfig-example-b}
+    \end{subfigure}
+    \hfill 
+    \begin{subtable}[b]{0.3\textwidth}
+        \begin{tabular}{L{0.1\linewidth} C{0.4\linewidth} r}
+        \hhline{===} 
+        \textbf{A} & \textbf{B} & \textbf{C}   \\ \hline 
+        D & E & F   \\
+        G & H & I   \\
+        \hhline{===}
+        \end{tabular}
+        \caption{Caption C}
+      \label{table:table}
+  \end{subtable}
+\caption{Caption for all sub-figures.}  % Caption for the figure as a whole
+\label{fig:subfig-example}              % Label for the figure as a whole
+\end{figure}
+\end{filecontents*}
+\@defusefultemplate{3 Subfigures (can be images or tables)}
+
+\begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+\begin{wrapfigure}{r}{0.4\linewidth}
+    \centering
+    \includegraphics[width=0.4\linewidth]{example-image}
+    \caption{Template of a Wrap Figure}
+    \label{fig:descriptive-label}
+\end{wrapfigure}
+
+\lipsum[1]
+\end{filecontents*}
+
+\@defusefultemplate{Wrapfigure (text wraps around it)}
+
+\begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+\end{filecontents*}
+\@defusefultemplate{Table}
+
+\begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+\end{filecontents*}
+\@defusefultemplate{A3 (vertical)}
+
+
+\begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+\end{filecontents*}
+\@defusefultemplate{A3 (horizontal)}
+
+\begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+\end{filecontents*}
+\@defusefultemplate{2 columns}
