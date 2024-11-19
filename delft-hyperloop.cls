@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\newcommand\@classversion{2024/11/18}
+\newcommand\@classversion{2024/11/19}
 \ProvidesClass{delft-hyperloop}[\@classversion\ Delft Hyperloop Document]
 \newcommand\@templatelink{https://www.overleaf.com/read/xkdvnhndtwwg\#fadb5a}
 
@@ -77,6 +77,7 @@
 
 \definecolor{HyperloopGreen}{HTML}{017357}
 \definecolor{customgreen}{HTML}{2EAB7B}
+\definecolor{bloodred}{HTML}{EE4B2B}
 \chapterfont{\color{HyperloopGreen}}
 
 % \sectionfont{\color{HyperloopGreen}}
@@ -219,7 +220,7 @@
         \@makeabstract
 
         \vfill
-        \ifnotfinal{Template version: {\color{HyperloopGreen} \hyperref[sec:changelog:\@classversion]{\@classversion}}}
+        \ifnotfinal{Template version: {\color{HyperloopGreen} \hyperref[sec:changelog:\@classversion]{\@classversion}} (\textbf{\color{HyperloopGreen} \hyperref[sec:how-to-update-template]{update}})}
     \end{titlepage}
 }
 
@@ -382,6 +383,8 @@
     \phantomsection \label{LastPageMainmatter}
     \newpage
 }
+\newcommand\@endbackmattercommons{
+}
 
 \ifthenelse{\equal{\@baseclass}{book}}{
     \newcommand\@beginfrontmatter{
@@ -407,6 +410,10 @@
 
         \@beginbackmattercommons
     }
+
+    \newcommand\@endbackmatter{
+        \@endbackmattercommons
+    }
 }{
     \newcommand\@beginfrontmatter{
         \@beginfrontmattercommons
@@ -427,6 +434,10 @@
     \newcommand\@beginbackmatter{
         \@beginbackmattercommons
     }
+
+    \newcommand\@endbackmatter{
+        \@endbackmattercommons
+    }
 }
 
 \newenvironment{frontmatter}{
@@ -443,7 +454,9 @@
 
 \newenvironment{backmatter}{
     \@beginbackmatter
-}{}
+}{
+    \@endbackmatter
+}
 
 \newcommand\delfthyperloop[1]{
     \includegraphics[width=#1\textwidth]{rsc/hyperloop logo.png}
@@ -486,7 +499,7 @@
 % ====== Template guidelines ======
 % =================================
 \newcommand\templateguidelines{
-    \part*{\TeX\ \& \LaTeX\ Template Guidelines}
+    \part*{About the \TeX\ \& \LaTeX\ Template}
     \input{rsc/changelog}
     \input{rsc/guidelines}
     \input{rsc/how-to-template}

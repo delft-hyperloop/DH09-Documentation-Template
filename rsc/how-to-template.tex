@@ -4,7 +4,7 @@ There's a couple of nice things that the template provides. You cannot use them 
 \section*{File folder structure}
 Ignore everything in the \verb|rsc| folder, except if you wanna update department names or add new department-specific commands. This is where the template code itself lies. If you want to add department-specific commands, declare them in \verb|rsc/depts/<department>.tex|, and then use them. \textbf{Make sure to follow the department-specific sources in the template rules (\nameref{sec:deptartment-specific-sources})}.
 
-All metadata about the document (title, authors, abstract, confidentiality) is located in the \verb|meta.tex|. 
+All metadata about the document (title, authors, abstract, confidentiality) is located in the \verb|meta.tex|.
 
 Use the \verb|mainmatter/contents| folder to add all your .tex files full of your cool content. It is recommended to have 1 file per chapter. Then, add these into the \verb|mainmatter/index.tex| file using \verb|\input{mainmatter/contents/Introduction}|.
 
@@ -21,7 +21,9 @@ References are managed with the BibTex package. References should be added to th
 
 \section*{Use of packages}
 
-There are tons of packages already included in this template. You can check them all in \verb|rsc/delft-hyperloop.cls|. If you need to add a new package, add it there with the command \verb|\Requirepackage{some_package}|. Also tell Dinu/Pablo/Daniel about this so that we update the template itself. If you don't, you risk this new package not being added in future iterations of the template, which might break your document in the future. So please do it!!
+There are tons of packages already included in this template. You can check them all in \verb|rsc/delft-hyperloop.cls|. If you need to add a new package to the template, add it there with the command \verb|\Requirepackage{some_package}|. Also tell Dinu/Pablo/Daniel about this so that we update the template itself. If you don't, you risk this new package not being added in future iterations of the template, which might break your document in the future. So please do it!!
+
+If you only need a package for your own document, you can add it with \verb|\usepackage{}| to the top of \verb|meta.tex|.
 
 \section*{Final version}
 
@@ -56,9 +58,13 @@ The template defines the following todo note commands. Here's what they look lik
 
 What makes this useful is that you also get a list of all the TODO notes in the document in an appendix, as long as you're not compiling the final version. You can see an example of that on the last page of this pdf. This allows you to quickly find and fix all of the comments.
 
-\section*{How to update the template}
+\newpage
+
+\section*{How to update the template} \label{sec:how-to-update-template}
 
 \textbf{\color{red} To make sure nothing breaks, start by noting down the current version of the template! You can find it on the title page if compiling in non final mode.}
+
+{\color{bloodred} If you changed anything in \verb|main.tex|, make a copy of it. You will need to do those changes again. We tried to move everything into \verb|meta.tex| and leaving just the template skeleton in \verb|main.tex|, so an update wouldn't break it, but some things are impossible to move somewhere else.}
 
 Go to \href{https://github.com/delft-hyperloop/DH09-Documentation-Template/releases}{\color{HyperloopGreen} the documentation template repository}, and grab the latest release.
 
