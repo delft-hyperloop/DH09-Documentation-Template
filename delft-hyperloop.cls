@@ -1,6 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
+\newcommand\@classname{delft-hyperloop}
 \newcommand\@classversion{2024/11/21}
-\ProvidesClass{delft-hyperloop}[\@classversion\ Delft Hyperloop Document]
+\ProvidesClass{\@classname}[\@classversion\ Delft Hyperloop Document]
 \newcommand\@templatelink{https://www.overleaf.com/read/xkdvnhndtwwg\#fadb5a}
 
 \newcommand\@baseclass{article}
@@ -26,9 +27,13 @@
 \def\g@star@or@long#1{% 
   \@ifstar{\let\l@ngrel@x\global#1}{\def\l@ngrel@x{\long\global}#1}}
 
-\newcommand\@error[1]{\expandafter\ClassError{delft-hyperloop}{#1}{Ask Dinu for help.}}
+\newcommand\@error[1]{\expandafter\ClassError{\@classname}{#1}{Ask Dinu for help.}}
 
 \LoadClass{\@baseclass}
+
+% ===============================
+% ========= Packages ============
+% ===============================
 
 \RequirePackage{ifthen}
 
@@ -72,21 +77,24 @@
 \RequirePackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \RequirePackage[left, pagewise]{lineno}
 \RequirePackage{minted}
-% \RequirePackage{filecontentsdef}
 \RequirePackage{fancyvrb}
 
 \makeindex
 
+% ===========================
+% ======== Colors ===========
+% ===========================
+
 \definecolor{HyperloopGreen}{HTML}{017357}
 \definecolor{customgreen}{HTML}{2EAB7B}
 \definecolor{bloodred}{HTML}{EE4B2B}
-\chapterfont{\color{HyperloopGreen}}
 
+\chapterfont{\color{HyperloopGreen}}
 % \sectionfont{\color{HyperloopGreen}}
 
-% ===========================================
-% ====== Team information ===================
-% ===========================================
+% ============================================
+% =========== Team information ===============
+% ============================================
 
 \newcommand\@company{Delft Hyperloop}
 \newcommand\@generation{9}
@@ -129,6 +137,16 @@
     \@makecount{cntdepts}
     \whiledo{\value{cntdepts}<\value{deptcnt}}{\ifthenelse{\value{cntdepts}=0}{}{, }\getdept{\thecntdepts}\stepcounter{cntdepts}}
 }
+
+\input{rsc/depts/management}
+\input{rsc/depts/business}
+\input{rsc/depts/scalability}
+\input{rsc/depts/mechanical}
+\input{rsc/depts/levitation}
+\input{rsc/depts/propulsion}
+\input{rsc/depts/powertrain}
+\input{rsc/depts/sensecon}
+\input{rsc/depts/thermal}
 
 % ==========================
 % ======= Authors ==========
@@ -214,7 +232,7 @@
     
         \vfill
         % Logo at the bottom
-        \delfthyperloop{0.4} % Adjust the width as needed
+        \delfthyperlooplogo{0.4} % Adjust the width as needed
         \vfill
         
         \@confdisclaimer
@@ -332,9 +350,9 @@
 
 \newcommand\appendixtodolistchapter{\ifnotfinal{\listoftodos[\chapter{List of TODOs}]}}
 
-% ================================
-% ======= The FINAL toggle =======
-% ================================
+% ==============================================
+% ======= Commands with the final toggle =======
+% ==============================================
 
 \newcommand\iffinal[1]{\iffinalelse{#1}{}}
 \newcommand\ifnotfinal[1]{\iffinalelse{}{#1}}
@@ -354,6 +372,10 @@
     
         \linenumbers
     }
+}
+
+\newcommand\delfthyperlooplogo[1]{
+    \includegraphics[width=#1\textwidth]{rsc/hyperloop logo.png}
 }
 
 % =================================
@@ -467,36 +489,9 @@
     \@endbackmatter
 }
 
-\newcommand\delfthyperloop[1]{
-    \includegraphics[width=#1\textwidth]{rsc/hyperloop logo.png}
-}
-
-\input{rsc/depts/management}
-\input{rsc/depts/business}
-\input{rsc/depts/scalability}
-\input{rsc/depts/mechanical}
-\input{rsc/depts/levitation}
-\input{rsc/depts/propulsion}
-\input{rsc/depts/powertrain}
-\input{rsc/depts/sensecon}
-\input{rsc/depts/thermal}
-
-
 % =====================
 % ==== Glossaries =====
 % =====================
-% \GlsXtrRecordCounter{chapter}
-
-% \newcommand{\printchapterglossary}[1][]{%
-%   \printunsrtglossary*[nonumberlist,#1]{%
-%     \renewcommand{\printunsrtglossaryhandler}[1]{%
-%      \glsxtrfieldxifinlist{##1}{record.chapter}{\thechapter}
-%      {\glsxtrunsrtdo{##1}}%
-%      {}%
-%     }%
-%   }%
-% }
-
 \newcommand\addgloss[2]{\newglossaryentry{#1}{name=#1,description={#2}}}
 \newcommand\addglossmath[3]{\newglossaryentry{#3}{name=\ensuremath{#1},description={#2}}}
 
@@ -535,12 +530,5 @@
     \end{listing}
     \input{#1}
 }
-
-% \newcommand\codeandoutput[1]{
-%     \begin{minted}{tex}
-%     \unexpanded{#1}
-%     \end{minted}
-%     {#1}
-% }
 
 \input{rsc/useful-templates}
