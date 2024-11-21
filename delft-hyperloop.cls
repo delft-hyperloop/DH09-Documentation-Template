@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\newcommand\@classversion{2024/11/19}
+\newcommand\@classversion{2024/11/21}
 \ProvidesClass{delft-hyperloop}[\@classversion\ Delft Hyperloop Document]
 \newcommand\@templatelink{https://www.overleaf.com/read/xkdvnhndtwwg\#fadb5a}
 
@@ -515,7 +515,10 @@
     \input{rsc/how-to-template}
 
     \chapter*{Useful templates} \label{chapter:useful-templates}
-    \addcontentsline{toc}{chapter}{Useful templates}
+    \addcontentsline{toc-useful-templates}{chapter}{Useful templates}
+    \@starttoc{toc-useful-templates}
+    \newpage
+    
     \@renderusefultemplates
     \vfill
     \begin{center}

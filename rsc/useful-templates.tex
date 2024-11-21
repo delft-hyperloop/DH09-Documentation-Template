@@ -9,7 +9,7 @@
     \whiledo{\value{renderusefultemplatescnt}<\value{usefultemplate}}{
         \ifthenelse{\value{renderusefultemplatescnt}=0}{}{\newpage}
         \section*{\@nameuse{usefultemplatetitle\therenderusefultemplatescnt}}
-        \addcontentsline{toc}{section}{\@nameuse{usefultemplatetitle\therenderusefultemplatescnt}}
+        \addcontentsline{toc-useful-templates}{section}{\@nameuse{usefultemplatetitle\therenderusefultemplatescnt}}
         \@codeandoutput{__useful_templates-\therenderusefultemplatescnt}{useful-templates-\therenderusefultemplatescnt}{Code listing for \@nameuse{usefultemplatetitle\therenderusefultemplatescnt}}
         \stepcounter{renderusefultemplatescnt}
     }
