@@ -1,5 +1,5 @@
 \documentclass[
-    % Base class, can be `article`, `report` or `book`.
+    % Base class, can be `report` or `book`.
     report,
     % When done and ready to submit the document, uncomment the following
     % line, to make the todo notes and TODO list at the end disappear, as well as remove the guidelines and template introduction chapters, and then finally render.
@@ -15,7 +15,7 @@
 \emergencystretch 3em
 \begin{document}
 
-\begin{frontmatter}
+\begin{clsfrontmatter}
 \maketitle
 
 % ===================================
@@ -27,9 +27,9 @@
 % Do not delete the guidelines or how-to-template files from the project, they might come in handy later!
 
 \ifnotfinal{\templateguidelines}
-\end{frontmatter}
+\end{clsfrontmatter}
 
-\begin{mainmatter}
+\begin{clsmainmatter}
 \tableofcontents
 
 % ===================================
@@ -37,9 +37,9 @@
 % ===================================
 % Input any main matter files in the mainmatter/index.tex file.
 \input{mainmatter/index}
-\end{mainmatter}
+\end{clsmainmatter}
 
-\begin{backmatter}
+\begin{clsbackmatter}
 \printbibliography[heading=bibintoc, title=References]
 
 \begin{appendices}
@@ -58,6 +58,6 @@
     \printunsrtglossary[type=main]
     \printunsrtglossary[type=\acronymtype]
 \end{appendices}
-\end{backmatter}
+\end{clsbackmatter}
 
 \end{document}

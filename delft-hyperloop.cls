@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \newcommand\@classname{delft-hyperloop}
-\newcommand\@classversion{2024/11/21}
+\newcommand\@classversion{2024/11/25}
 \ProvidesClass{\@classname}[\@classversion\ Delft Hyperloop Document]
 \newcommand\@templatelink{https://www.overleaf.com/read/xkdvnhndtwwg\#fadb5a}
 
@@ -11,7 +11,6 @@
 
 \DeclareOption{book}{\renewcommand\@baseclass{book}}
 \DeclareOption{report}{\renewcommand\@baseclass{report}}
-\DeclareOption{article}{\renewcommand\@baseclass{article}}
 \DeclareOption{final}{
     \renewcommand\@final{true}
     \renewcommand\iffinalelse[2]{#1}
@@ -175,9 +174,15 @@
 % ========================
 % ======= Abstract =======
 % ========================
-\newcommand\@abstract{}
-\renewcommand\abstract[1]{\renewcommand\@abstract{#1}}
-\newcommand\@makeabstract{\ifdefempty{\@abstract}{}{\textbf{Abstract:} \@abstract}}
+
+\ifthenelse{\equal{\@baseclass}{book}}{
+    \newcommand\@makeabstract{}
+    \newcommand\abstract[1]{}
+}{
+    \newcommand\@abstract{}
+    \renewcommand\abstract[1]{\renewcommand\@abstract{#1}}
+    \newcommand\@makeabstract{\ifdefempty{\@abstract}{}{\textbf{Abstract:} \@abstract}}
+}
 
 % =====================================
 % ========== Link to project ==========
@@ -383,8 +388,6 @@
 % =================================
 
 \gnewcommand\@docpart{}
-\gnewcommand\@mainmatterdefined{}
-\newbool{@mainmatterdefined}
 
 \newcommand\@beginfrontmattercommons{
     \setcounter{page}{1}
@@ -471,19 +474,19 @@
     }
 }
 
-\newenvironment{frontmatter}{
+\newenvironment{clsfrontmatter}{
     \@beginfrontmatter
 }{
     \@endfrontmatter
 }
 
-\newenvironment{mainmatter}{
+\newenvironment{clsmainmatter}{
     \@beginmainmatter
 }{
     \@endmainmatter
 }
 
-\newenvironment{backmatter}{
+\newenvironment{clsbackmatter}{
     \@beginbackmatter
 }{
     \@endbackmatter
