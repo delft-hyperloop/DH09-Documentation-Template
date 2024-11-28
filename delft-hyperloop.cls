@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \newcommand\@classname{delft-hyperloop}
-\newcommand\@classversion{2024/11/25}
+\newcommand\@classversion{2024/11/28}
 \ProvidesClass{\@classname}[\@classversion\ Delft Hyperloop Document]
 \newcommand\@templatelink{https://www.overleaf.com/read/xkdvnhndtwwg\#fadb5a}
 
@@ -8,12 +8,16 @@
 \newcommand\@final{false}
 \newcommand\iffinalelse[2]{#2}
 
+\newcommand\@renderusefultemplatestikz{\@renderusefultemplatestikzfromoutput}
 
 \DeclareOption{book}{\renewcommand\@baseclass{book}}
 \DeclareOption{report}{\renewcommand\@baseclass{report}}
 \DeclareOption{final}{
     \renewcommand\@final{true}
     \renewcommand\iffinalelse[2]{#1}
+}
+\DeclareOption{tikzusefultemplatesrender}{
+    \renewcommand\@renderusefultemplatestikz{\@dorenderusefultemplatestikz}
 }
 
 \ProcessOptions\relax
@@ -37,11 +41,7 @@
 \RequirePackage{ifthen}
 
 % Todo notes want some very big page margins, so if final, use 1.75cm, else use 2.5cm to have enough space
-\ifthenelse{\equal{\@final}{true}}{
-    \newcommand\@marginparwidth{1.75cm}
-}{
-    \newcommand\@marginparwidth{2.5cm}
-}
+\iffinalelse{\newcommand\@marginparwidth{1.75cm}}{\newcommand\@marginparwidth{2.5cm}}
 
 \RequirePackage[a4paper,top=1in,bottom=1in,left=1.25in,right=1.25in,marginparwidth=\@marginparwidth]{geometry}
 
@@ -77,6 +77,17 @@
 \RequirePackage[left, pagewise]{lineno}
 \RequirePackage{minted}
 \RequirePackage{fancyvrb}
+
+% TikZ
+\RequirePackage{tikz}
+\usetikzlibrary{positioning}
+% \usetikzlibrary{external}
+
+% Pgfplots
+\RequirePackage{pgfplots}
+
+% \usepgfplotslibrary{external}
+% \tikzexternalize
 
 \makeindex
 
@@ -159,6 +170,17 @@
 }
 \newcommand\makeauthors{\author{\@defaultauthors}}
 
+\newcommand\@titlepageheader{
+    % Title and Author at the top
+    {\Huge \textbf{\@depts} \par}
+    \vspace{1cm} % Adjust space between title and author
+    {\large \@companyandgen \par}
+}
+
+\newcommand\makeauthorsentireteam{
+    \renewcommand\@titlepageheader{{\Huge \textbf{\@companyandgen} \par}}
+}
+
 % ========================
 % ===== Confidential =====
 % ========================
@@ -199,9 +221,7 @@
     \begin{titlepage}
         \centering
         % Title and Author at the top
-        {\Huge \textbf{\@depts} \par}
-        \vspace{1cm} % Adjust space between title and author
-        {\large \@companyandgen \par}
+        \@titlepageheader
     
         \vspace{0.5cm} % Adjust space between author and green lines
     
@@ -325,9 +345,7 @@
 
 \ifthenelse{\equal{\@baseclass}{book}}{\@twosidedpagestyles}{
     \ifthenelse{\equal{\@baseclass}{report}}{\@onesidedpagestyles}{
-        \ifthenelse{\equal{\@baseclass}{article}}{\@onesidedpagestyles}{
-            \@error{Unrecognized baseclass: "\@baseclass"}
-        }
+        \@error{Unrecognized baseclass: "\@baseclass"}
     }
 }
 
@@ -518,6 +536,7 @@
     \newpage
     
     \@renderusefultemplates
+    \@renderusefultemplatestikz
     \vfill
     \begin{center}
     \fontsize{1000}{20}\selectfont \textbf{Finalize the document to remove this.}
@@ -531,7 +550,20 @@
         \caption{#3}
         \label{listing:#2}
     \end{listing}
+
     \input{#1}
 }
 
+\newcommand\@codeandoutputtikz[4]{%
+    \def\tikzpage{\the\numexpr#4+1\relax}
+    \begin{listing}[!ht]
+        \inputminted{tex}{#1.tex}
+        \caption{#3}
+        \label{listing:#2}
+    \end{listing}
+
+    \includegraphics[page=\tikzpage, clip]{rsc/useful-templates-tikz.pdf}
+}
+
 \input{rsc/useful-templates}
+\input{rsc/useful-templates-tikz}

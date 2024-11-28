@@ -2,6 +2,11 @@
 \label{chapter:template-guidelines}
 These guidelines aim to develop consistency in report layout, use of English, and use of \LaTeX. For any questions, remarks or suggestions on the guidelines, please contact Dinu/Pablo.
 
+\section*{\LaTeX \ guidelines}
+\begin{enumerate}[label=LTX.\arabic*]
+    \item Never write \verb|&| directly in your text, always write \verb|\&|. The \& symbol is reserved for other stuff
+    \item Use \verb|\autoref{label-here}| to reference elements. Do \textbf{not} use \verb|\ref{label-here}| (autoref automatically writes "Figure" or "Table" in the correct format).
+\end{enumerate}
 \section*{On General Consistency}
 \label{sec:general-consistency}
 \begin{enumerate}[label=G.\arabic*]
@@ -34,7 +39,7 @@ These guidelines aim to develop consistency in report layout, use of English, an
         \item \textit{subfig:} for subfigure.
         \item \textit{note:} for a footnote. Labels for footnotes are optional.
     \end{enumerate}
-    \item Use \verb|\autoref{label-here}| to reference elements. Do \textbf{not} use \verb|\ref{label-here}| (autoref automatically writes "Figure" or "Table" in the correct format).
+    
     \item You can also use \verb|\nameref{label-here}| to reference items by their name, as opposed to their number, if it adds clarity.
 \end{enumerate}
 
@@ -127,7 +132,7 @@ These guidelines aim to develop consistency in report layout, use of English, an
     \caption{Caption for all sub-figures.}  % Caption for the figure as a whole
     \label{fig:subfig-example}              % Label for the figure as a whole
 \end{figure}
-
+\nameref{fig:subfig-example}
 \section*{On Use of Sources}
 \begin{enumerate}[label=SO.\arabic*]
     \item Follow the IEEE guidelines.
