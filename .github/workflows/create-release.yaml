@@ -37,6 +37,6 @@ jobs:
           tag="${{ steps.tag.outputs.tag }}"
           body="Version at $(date +%Y%m%d.%H%M%S)"
           zip_file="${{ steps.prepare.outputs.zip_file }}"
-          gh release create "$tag" --title "$tag" --notes "$body" "$zip_file#Template"
+          gh release create "$tag" --title "$tag" --notes "$body" "$zip_file#Template" "rsc/useful-templates-tikz.pdf#Tikz Useful Templates"
         env:
           GH_TOKEN: ${{ github.token }}
