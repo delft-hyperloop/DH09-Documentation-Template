@@ -12,10 +12,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Install TeXlive
         run: sudo apt-get update && sudo apt-get install texlive texlive-publishers texlive-science latexmk cm-super gnuplot
+      - name: Make temporary directory with stuff
+        run: mkdir tmp && cp rsc/useful-templates-tikz-main.tex rsc/useful-templates-tikz.tex tmp
       - name: LaTeX compile
-        working-directory: rsc
+        working-directory: tmp
         run: pdflatex --shell-escape useful-templates-tikz-main
-      - run: ls
+      - name: Copy output to rsc
+        run: mv tmp/useful-templates-tikz-main.pdf rsc/useful-templates-tikz.pdf
       - name: Set tag name
         id: tag
         run: |
