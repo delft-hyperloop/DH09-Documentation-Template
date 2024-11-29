@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \newcommand\@classname{delft-hyperloop}
-\newcommand\@classversion{2024/11/28}
+\newcommand\@classversion{2024/11/29}
 \ProvidesClass{\@classname}[\@classversion\ Delft Hyperloop Document]
 \newcommand\@templatelink{https://www.overleaf.com/read/xkdvnhndtwwg\#fadb5a}
 
@@ -297,7 +297,7 @@
       \fancyhead{} % clear all header fields
       \fancyhead[C]{\textbf{\@title}}
       \fancyfoot{} % clear all footer fields
-      \fancyfoot[L]{\ifnotfinal{\hyperref[chapter:useful-templates]{\color{HyperloopGreen} Go to useful templates}}}
+      \fancyfoot[L]{\ifnotfinal{\hyperref[chapter:useful-snippets]{\color{HyperloopGreen} Go to useful snippets}}}
       \fancyfoot[R]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
@@ -311,7 +311,7 @@
       \fancyhf{}%
       \fancyfoot[R]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
-      \fancyfoot[L]{\ifnotfinal{\hyperref[chapter:useful-templates]{\color{HyperloopGreen} Go to useful templates}}}
+      \fancyfoot[L]{\ifnotfinal{\hyperref[chapter:useful-snippets]{\color{HyperloopGreen} Go to useful snippets}}}
       \renewcommand\headrulewidth{0pt}% Line at the header invisible
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
     }
@@ -324,7 +324,7 @@
       \fancyfoot{} % clear all footer fields
       \fancyfoot[LE,RO]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
-      \fancyfoot[LO,RE]{\ifnotfinal{\hyperref[chapter:useful-templates]{\color{HyperloopGreen} Go to useful templates}}}
+      \fancyfoot[LO,RE]{\ifnotfinal{\hyperref[chapter:useful-snippets]{\color{HyperloopGreen} Go to useful snippets}}}
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
     
       \fancyhead[LE]{\nouppercase{\rightmark\hfill\leftmark}}
@@ -337,7 +337,7 @@
       \fancyhf{}%
       \fancyfoot[LE,RO]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
-      \fancyfoot[LO,RE]{\ifnotfinal{\hyperref[chapter:useful-templates]{\color{HyperloopGreen} Go to useful templates}}}
+      \fancyfoot[LO,RE]{\ifnotfinal{\hyperref[chapter:useful-snippets]{\color{HyperloopGreen} Go to useful snippets}}}
       \renewcommand\headrulewidth{0pt}% Line at the header invisible
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
     }
@@ -530,9 +530,9 @@
     \input{rsc/guidelines}
     \input{rsc/how-to-template}
 
-    \chapter*{Useful templates} \label{chapter:useful-templates}
-    \addcontentsline{toc-useful-templates}{chapter}{Useful templates}
-    \@starttoc{toc-useful-templates}
+    \chapter*{Useful snippets} \label{chapter:useful-snippets}
+    \addcontentsline{toc-useful-snippets}{chapter}{Useful snippets}
+    \@starttoc{toc-useful-snippets}
     \newpage
     
     \@renderusefultemplates
