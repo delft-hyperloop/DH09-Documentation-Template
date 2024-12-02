@@ -1,10 +1,10 @@
 \NeedsTeXFormat{LaTeX2e}
 \newcommand\@classname{delft-hyperloop}
-\newcommand\@classversion{2024/11/29}
+\newcommand\@classversion{2024/12/02}
 \ProvidesClass{\@classname}[\@classversion\ Delft Hyperloop Document]
 \newcommand\@templatelink{https://www.overleaf.com/read/xkdvnhndtwwg\#fadb5a}
 
-\newcommand\@baseclass{article}
+\newcommand\@baseclass{report}
 \newcommand\@final{false}
 \newcommand\iffinalelse[2]{#2}
 
@@ -80,7 +80,7 @@
 
 % TikZ
 \RequirePackage{tikz}
-\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta,decorations.pathmorphing,backgrounds,positioning,fit,petri,intersections}
 % \usetikzlibrary{external}
 
 % Pgfplots
@@ -291,13 +291,15 @@
     }}}
 }
 
+\newcommand\@usefulsnippetslinks{\hyperref[chapter:useful-snippets]{\color{HyperloopGreen} Useful snippets} (and \hyperref[chapter:useful-snippets-tikz]{\textbf{\color{HyperloopGreen} TikZ}})}
+
 \newcommand\@onesidedpagestyles{
     \fancypagestyle{ournormal}{
       %... then configure it.
       \fancyhead{} % clear all header fields
       \fancyhead[C]{\textbf{\@title}}
       \fancyfoot{} % clear all footer fields
-      \fancyfoot[L]{\ifnotfinal{\hyperref[chapter:useful-snippets]{\color{HyperloopGreen} Go to useful snippets}}}
+      \fancyfoot[L]{\ifnotfinal{\@usefulsnippetslinks}}
       \fancyfoot[R]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
@@ -311,7 +313,7 @@
       \fancyhf{}%
       \fancyfoot[R]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
-      \fancyfoot[L]{\ifnotfinal{\hyperref[chapter:useful-snippets]{\color{HyperloopGreen} Go to useful snippets}}}
+      \fancyfoot[L]{\ifnotfinal{\@usefulsnippetslinks}}
       \renewcommand\headrulewidth{0pt}% Line at the header invisible
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
     }
@@ -324,7 +326,7 @@
       \fancyfoot{} % clear all footer fields
       \fancyfoot[LE,RO]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
-      \fancyfoot[LO,RE]{\ifnotfinal{\hyperref[chapter:useful-snippets]{\color{HyperloopGreen} Go to useful snippets}}}
+      \fancyfoot[LO,RE]{\ifnotfinal{\@usefulsnippetslinks}}
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
     
       \fancyhead[LE]{\nouppercase{\rightmark\hfill\leftmark}}
@@ -337,7 +339,7 @@
       \fancyhf{}%
       \fancyfoot[LE,RO]{\@pageidx}
       \fancyfoot[C]{\@companyandgen}
-      \fancyfoot[LO,RE]{\ifnotfinal{\hyperref[chapter:useful-snippets]{\color{HyperloopGreen} Go to useful snippets}}}
+      \fancyfoot[LO,RE]{\ifnotfinal{\@usefulsnippetslinks}}
       \renewcommand\headrulewidth{0pt}% Line at the header invisible
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
     }
@@ -531,11 +533,40 @@
     \input{rsc/how-to-template}
 
     \chapter*{Useful snippets} \label{chapter:useful-snippets}
-    \addcontentsline{toc-useful-snippets}{chapter}{Useful snippets}
+    \addcontentsline{toc-useful-snippets}{chapter}{Useful general \LaTeX\ snippets}
     \@starttoc{toc-useful-snippets}
     \newpage
     
     \@renderusefultemplates
+
+    \chapter*{Useful TikZ snippets} \label{chapter:useful-snippets-tikz}
+    \addcontentsline{toc-useful-snippets}{chapter}{Useful TikZ snippets}
+    % \addcontentsline{toc-useful-snippets-tikz}{chapter}{Useful TikZ snippets}
+
+    \@starttoc{toc-useful-snippets-tikz}
+    
+    \section*{Introduction}
+    \addcontentsline{toc-useful-snippets-tikz}{section}{Introduction}
+
+    Here you can find useful TikZ / Pgfplots snippets. TikZ is a \LaTeX\ package that can create graphical elements from \LaTeX\ code, and Pgfplots is a \LaTeX\ package based on TikZ that can automatically render plots from formulas alone. These snippets come from Overleaf's documentation on TikZ and Pgfplots. For explanations on what the options to those commands do, refer to those resources:
+
+    \textbf{For TikZ}:
+    \begin{itemize}
+        \item \url{https://www.overleaf.com/learn/latex/TikZ_package}
+        \item \url{https://cremeronline.com/LaTeX/minimaltikz.pdf} for a small introduction to TikZ.
+        \item \url{https://mirror.koddos.net/CTAN/graphics/pgf/base/doc/pgfmanual.pdf} for the in-depth manual on how to use TikZ / pgf.
+        \item \url{https://ctan.org/pkg/tikz?lang=en} for the CTAN page of tikz.
+    \end{itemize}
+
+    \textbf{For Pgfplots}:
+    \begin{itemize}
+        \item \url{https://www.overleaf.com/learn/latex/Pgfplots_package}
+        \item \url{https://ftp.snt.utwente.nl/pub/software/tex/graphics/pgf/contrib/pgfplots/doc/pgfplots.pdf} for the in-depth manual on how to use Pgfplots.
+        \item \url{https://ctan.org/pkg/pgfplots?lang=en} for the CTAN page of pgfplots.
+    \end{itemize}
+
+    \newpage
+    
     \@renderusefultemplatestikz
     \vfill
     \begin{center}
@@ -554,15 +585,35 @@
     \input{#1}
 }
 
-\newcommand\@codeandoutputtikz[4]{%
-    \def\tikzpage{\the\numexpr#4+1\relax}
+\newcommand\@codeandoutputtikzrender[4]{
     \begin{listing}[!ht]
         \inputminted{tex}{#1.tex}
         \caption{#3}
         \label{listing:#2}
     \end{listing}
 
+    % \begin{figure}[tph!]
+    %     \centering
+        \input{#1}
+    %     \caption{#4}
+    %     \label{fig:#2}
+    % \end{figure}
+}
+
+\newcommand\@codeandoutputtikz[5]{%
+    \def\tikzpage{\the\numexpr#5+1\relax}
+    \begin{listing}[!ht]
+        \inputminted{tex}{#1.tex}
+        \caption{#3}
+        \label{listing:#2}
+    \end{listing}
+
+    % \begin{figure}[tph]
+    % \centering
     \includegraphics[page=\tikzpage, clip]{rsc/useful-templates-tikz.pdf}
+    %     \caption{#4}
+    %     \label{fig:#2}
+    % \end{figure}
 }
 
 \input{rsc/useful-templates}
