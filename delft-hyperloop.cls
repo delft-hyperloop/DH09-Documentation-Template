@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \newcommand\@classname{delft-hyperloop}
-\newcommand\@classversion{2024/12/02}
+\newcommand\@classversion{2024/12/05}
 \ProvidesClass{\@classname}[\@classversion\ Delft Hyperloop Document]
 \newcommand\@templatelink{https://www.overleaf.com/read/xkdvnhndtwwg\#fadb5a}
 
@@ -41,9 +41,17 @@
 \RequirePackage{ifthen}
 
 % Todo notes want some very big page margins, so if final, use 1.75cm, else use 2.5cm to have enough space
-\iffinalelse{\newcommand\@marginparwidth{1.75cm}}{\newcommand\@marginparwidth{2.5cm}}
+\iffinalelse{
+    \newcommand\@marginparwidth{0.75in}
+    \newcommand\@leftmargin{1in}
+    \newcommand\@rightmargin{1in}
+}{
+    \newcommand\@marginparwidth{2.5cm}
+    \newcommand\@leftmargin{1.25in}
+    \newcommand\@rightmargin{1.25in}
+}
 
-\RequirePackage[a4paper,top=1in,bottom=1in,left=1.25in,right=1.25in,marginparwidth=\@marginparwidth]{geometry}
+\RequirePackage[a4paper,top=1in,bottom=1in,left=\@leftmargin,right=\@rightmargin,marginparwidth=\@marginparwidth]{geometry}
 
 \RequirePackage[english]{babel}
 \RequirePackage{array}

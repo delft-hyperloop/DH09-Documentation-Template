@@ -101,6 +101,19 @@
 \@defusefultemplate{Wrapfigure (text wraps around it)}
 
 \begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ll}
+        \hhline{==} % change to match the number of columns
+        \textbf{Parameter} & \textbf{Value} \\
+        \hline
+        Pod speed [m/s] & 2,998e+8 \\
+        \hhline{==}
+    \end{tabular}
+
+    \caption{Realistic goals}
+    \label{table:table}
+\end{table}
 \end{filecontents*}
 \@defusefultemplate{Table}
 
