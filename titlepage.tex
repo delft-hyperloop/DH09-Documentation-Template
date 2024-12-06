@@ -1,0 +1,95 @@
+% Add the default wallpaper
+\tpwallpaper
+% You can also add your own, and pass the path as an optional argument,
+% Like here:
+% \tpwallpaper[rsc/coverwallpaper.jpg]
+
+% Text colors
+\color{white} % Main font color
+\colorlet{tpcontourcolor}{black} % font outline color
+
+\font\tplarge=cmr12 at 16pt
+\font\tpboldlarge=cmbx12 at 16pt
+\font\tpboldLARGE=cmbx12 at 28pt
+\tplarge
+
+\contourlength{2pt}
+\contournumber{20}
+
+\centering
+
+% \vfill
+
+% Author info at the top
+%
+% If \makeauthors was used, this is the list of departments, with
+% the team name written below in small letters.
+%
+% If \makeauthorsentireteam was used, then it is just the
+% name of the team.
+\tpheader
+
+\vspace{0.5cm} % Adjust space between author and green lines
+
+% First green line
+\textcolor{HyperloopGreen}{\rule{\textwidth}{1.5pt}}
+
+\vspace{0.5cm} % Space between line and title
+% Main title in the center
+
+{\tpboldLARGE \tptext{\tpdoctitle}}
+
+
+\vspace{0.5cm} % Space between title and second green line
+% Second green line
+\textcolor{HyperloopGreen}{\rule{\textwidth}{1.5pt}}
+
+% Detailed author info.
+%
+% If \makeauthors was used, this is the list of all the people in the
+% selected departments.
+%
+% If \makeauthorsentireteam was used, this is empty.
+%
+% If the normal \author command was used, then this is the list of
+% authors passed to it.
+% {\tplarge \tptext{\tpdocauthorinfo} \par}
+
+\vspace{1.2cm}
+
+% The date
+{\tplarge \tptext{\tpdocdate} \par}
+\vspace{0.3cm}
+
+% The box with the links in the middle
+\ifnotfinal{
+    \noindent\fbox{%
+        \parbox{\textwidth}{
+            \centering
+            % Add the link to the document, if any
+            % By default, it links to the template.
+            % You can configure it with the \doclink
+            % command in `meta.tex`.
+            \tptext{\tpdoclinkheader}
+            \tptext{\expandafter\url{\tpdoclink}}
+
+            \vspace{0.3cm}
+
+            % Makes a clickable link which you can use to jump directly to the main matter.
+            % The argument is the text of the link.
+            \tptext{\tplinktomainmatter{Jump to \textcolor{HyperloopGreen}{Main matter}}}
+        }
+    }
+}
+
+
+\vfill
+
+% Add the confidential disclaimer, if any
+{\tpboldlarge \tptext{\tpconfdisclaimer}}
+
+% Add the abstract, if any
+% {\tptext{\tpabstract}}
+
+\vfill
+\ifnotfinal{\tptext{\tptemplateversionline}}

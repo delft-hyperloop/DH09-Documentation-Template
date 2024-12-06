@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \newcommand\@classname{delft-hyperloop}
-\newcommand\@classversion{2024/12/05}
+\newcommand\@classversion{2024/12/06}
 \ProvidesClass{\@classname}[\@classversion\ Delft Hyperloop Document]
 \newcommand\@templatelink{https://www.overleaf.com/read/xkdvnhndtwwg\#fadb5a}
 
@@ -85,6 +85,10 @@
 \RequirePackage[left, pagewise]{lineno}
 \RequirePackage{minted}
 \RequirePackage{fancyvrb}
+\RequirePackage{transparent}
+\RequirePackage{eso-pic}
+\RequirePackage[outline]{contour}
+\RequirePackage{xparse}
 
 % TikZ
 \RequirePackage{tikz}
@@ -186,7 +190,7 @@
 }
 
 \newcommand\makeauthorsentireteam{
-    \renewcommand\@titlepageheader{{\Huge \textbf{\@companyandgen} \par}}
+    \renewcommand\@titlepageheader{{\delfthyperlooplogo{0.4}}}
 }
 
 % ========================
@@ -206,12 +210,12 @@
 % ========================
 
 \ifthenelse{\equal{\@baseclass}{book}}{
-    \newcommand\@makeabstract{}
+    \newcommand\@makeabstract[1]{}
     \newcommand\abstract[1]{}
 }{
     \newcommand\@abstract{}
     \renewcommand\abstract[1]{\renewcommand\@abstract{#1}}
-    \newcommand\@makeabstract{\ifdefempty{\@abstract}{}{\textbf{Abstract:} \@abstract}}
+    \newcommand\makeabstract{\@abstract}
 }
 
 % =====================================
@@ -225,55 +229,83 @@
 % ====== Title page =============
 % ===============================
 
+\newcommand\@inclwallpaper[1]{
+    \AddToShipoutPicture*{
+    \put(0,0){%
+    \parbox[b][\paperheight]{\paperwidth}{%
+    \vfill
+    \centering
+    {\transparent{0.9} \includegraphics[width=\paperwidth,height=\paperheight]{#1}}%
+    \vfill
+    }}
+    }
+}
+
+\gnewcommand\@titlebody{}
+
+\newcommand\@redesigntitlepage[1]{
+    \grenewcommand\@titlebody{#1}
+}
+
+\newcommand\designcoverpage[1]{
+    \@redesigntitlepage{#1}
+}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\@tptextimpl}{m}
+{
+  \seq_set_split:Nnn \l_tmpa_seq { ~ } { #1 }
+  \seq_map_inline:Nn \l_tmpa_seq { \contour{tpcontourcolor}{##1} ~ } \unskip
+}
+\ExplSyntaxOff
+
+\newcommand\tptext[1]{\expandafter\@tptextimpl\expandafter{#1}}
+\newcommand\tptexthyperloopgreen[1]{\tptext{\textcolor{HyperloopGreen}{#1}}}
+
+\newcommand\@deftpcommands{
+    % \newcommand\@tptextlinewidth{.05ex}
+    % \newcommand\tptext[1]{{\color{black}\textpdfrender{
+    %     TextRenderingMode=FillStroke,
+    %     FillColor=white,
+    %     LineWidth=\@tptextlinewidth,
+    % }{##1}}}
+    
+    % \newcommand\tptexthyperloopgreen[1]{{\color{white}\textpdfrender{
+    %     TextRenderingMode=FillStroke,
+    %     FillColor=HyperloopGreen,
+    %     LineWidth=\@tptextlinewidth,
+    % }{##1}}}
+
+    % \DeclareRobustCommand{\tptextcontour}[1]{\contour{black}{##1}}
+    % \newcommand{\tptext}[1]{%
+    %   \@tfor\next:=##1\do{\tptextcontour{\next}}%
+    % }
+
+    % \def\@titleex{\@title}
+    % \def\@authorex{\@author}
+    % \def\@dateex{\@date}
+    % % \edef\@doclinkfullex{\@doclinkheader \\ \url{\@doclink}}
+    % \def\@tptemplateversionlineex{Template version: \tptexthyperloopgreen{\hyperref[sec:changelog:\@classversion]{\@classversion}} (\tptexthyperloopgreen{\hyperref[sec:how-to-update-template]{update}})}
+
+    \expandafter\newcommand\expandafter\tpdoctitle\expandafter{\@title}
+    \expandafter\newcommand\expandafter\tpdocauthorinfo\expandafter{\@author}
+    \expandafter\newcommand\expandafter\tpdocdate\expandafter{\@date}
+    \expandafter\newcommand\expandafter\tpheader\expandafter{\@titlepageheader}
+
+    \expandafter\newcommand\expandafter\tpdoclinkheader{\@doclinkheader}
+    \expandafter\newcommand\expandafter\tpdoclink\expandafter{\@doclink}
+    \expandafter\newcommand\expandafter\tpdoclinkfull\expandafter{\@doclinkheader \\ \url{\@doclink}}
+    \expandafter\newcommand\expandafter\tplinktomainmatter\expandafter[1]{\hyperref[BeginMainMatter]{##1}}
+    \expandafter\newcommand\expandafter\tpconfdisclaimer\expandafter{\@confdisclaimer}
+    \expandafter\newcommand\expandafter\tpabstract\expandafter{\@abstract}
+    \expandafter\newcommand\expandafter\tptemplateversionline\expandafter{Template version: \tptexthyperloopgreen{\hyperref[sec:changelog:\@classversion]{\@classversion}} (\tptexthyperloopgreen{\hyperref[sec:how-to-update-template]{update}})}
+    \newcommand\tpwallpaper[1][rsc/coverwallpaper.jpg]{\@inclwallpaper{##1}}
+}
+
 \renewcommand\maketitle{
     \begin{titlepage}
-        \centering
-        % Title and Author at the top
-        \@titlepageheader
-    
-        \vspace{0.5cm} % Adjust space between author and green lines
-    
-        % First green line
-        \textcolor{HyperloopGreen}{\rule{\textwidth}{1.5pt}}
-    
-        \vspace{0.5cm} % Space between line and title
-        % Main title in the center
-        {\LARGE \textbf{\@title} \par}
-    
-        \vspace{0.5cm} % Space between title and second green line
-        % Second green line
-        \textcolor{HyperloopGreen}{\rule{\textwidth}{1.5pt}}
-
-        {\large \@author \par}
-    
-        \vspace{1.2cm}
-        {\large \@date \par}
-        \vspace{0.3cm}
-        \ifnotfinal{
-            \noindent\fbox{%
-                \parbox{\textwidth}{
-                    \centering
-                    {\@doclinkheader \\ {\color{HyperloopGreen}\url{\@doclink}}}
-
-                    \vspace{0.3cm}
-            
-                    \hyperref[BeginMainMatter]{Jump to {\color{HyperloopGreen} Main matter}}
-                }
-            }
-        }
-
-    
-        \vfill
-        % Logo at the bottom
-        \delfthyperlooplogo{0.4} % Adjust the width as needed
-        \vfill
-        
-        \@confdisclaimer
-
-        \@makeabstract
-
-        \vfill
-        \ifnotfinal{Template version: {\color{HyperloopGreen} \hyperref[sec:changelog:\@classversion]{\@classversion}} (\textbf{\color{HyperloopGreen} \hyperref[sec:how-to-update-template]{update}})}
+        \@deftpcommands
+        \@titlebody
     \end{titlepage}
 }
 
