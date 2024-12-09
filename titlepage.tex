@@ -2,7 +2,7 @@
 \tpwallpaper
 % You can also add your own, and pass the path as an optional argument,
 % Like here:
-% \tpwallpaper[rsc/coverwallpaper.jpg]
+% \tpwallpaper[rsc/wp1.jpeg]
 
 % Text colors
 \color{white} % Main font color
@@ -11,10 +11,12 @@
 \font\tplarge=cmr12 at 16pt
 \font\tpboldlarge=cmbx12 at 16pt
 \font\tpboldLARGE=cmbx12 at 28pt
+\font\tpboldhuge=cmbx12 at 20pt
 \tplarge
 
-\contourlength{2pt}
+\contourlength{3pt}
 \contournumber{20}
+\setstretch{1.5}
 
 \centering
 
@@ -53,7 +55,7 @@
 %
 % If the normal \author command was used, then this is the list of
 % authors passed to it.
-% {\tplarge \tptext{\tpdocauthorinfo} \par}
+{\tplarge \tpdocauthorinfo \par}
 
 \vspace{1.2cm}
 
@@ -77,7 +79,7 @@
 
             % Makes a clickable link which you can use to jump directly to the main matter.
             % The argument is the text of the link.
-            \tptext{\tplinktomainmatter{Jump to \textcolor{HyperloopGreen}{Main matter}}}
+            \tptext{\tplinktotemplateinfo{Jump to the \textcolor{HyperloopGreen}{Template info \& guidelines}}}
         }
     }
 }

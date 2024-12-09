@@ -89,6 +89,7 @@
 \RequirePackage{eso-pic}
 \RequirePackage[outline]{contour}
 \RequirePackage{xparse}
+\RequirePackage{setspace}
 
 % TikZ
 \RequirePackage{tikz}
@@ -134,15 +135,25 @@
 \newcommand\getdept[1]{\@nameuse{@dept#1}}
 
 \newcounter{alldeptscnt}
-\newcommand\definedept[3]{
+\newcounter{deptspeople}
+\newcommand\definedept[2]{
     \@namedef{@deptname\thealldeptscnt}{#1}
     \@namedef{@deptlead\thealldeptscnt}{#2}
-    \@namedef{@deptpeople\thealldeptscnt}{#3}
+    \edef\df{\@namedef{@deptpeoplestart\thealldeptscnt}{\thedeptspeople}}
+    \df
+}
+\newcommand\deptperson[1]{
+    \@namedef{deptspeople\thedeptspeople}{#1}
+    \stepcounter{deptspeople}
+}
+\newcommand\finishdeptdef{
+    \edef\df{\@namedef{@deptpeopleend\thealldeptscnt}{\thedeptspeople}}
+    \df
     \stepcounter{alldeptscnt}
 }
 \newcommand\getdeptname[1]{\@nameuse{@deptname#1}}
 \newcommand\getdeptlead[1]{\@nameuse{@deptlead#1}}
-\newcommand\getdeptpeople[1]{\@nameuse{@deptpeople#1}}
+\newcommand\getdeptpeople[1]{\@makecount{getdeptpeoplecnt}\setcounter{getdeptpeoplecnt}{\number\@nameuse{@deptpeoplestart#1}}\whiledo{\value{getdeptpeoplecnt}<\number\@nameuse{@deptpeopleend#1}}{\ifthenelse{\value{getdeptpeoplecnt}=\@nameuse{@deptpeoplestart#1}}{}{\tptext{, }}\tptext{\@nameuse{deptspeople\thegetdeptpeoplecnt}}\stepcounter{getdeptpeoplecnt}}}
 
 \newcommand*\ifcounter[1]{%
   \ifcsname c@#1\endcsname
@@ -157,7 +168,7 @@
 \newcommand\dept[1]{\adddept{#1}}
 \newcommand\@depts{
     \@makecount{cntdepts}
-    \whiledo{\value{cntdepts}<\value{deptcnt}}{\ifthenelse{\value{cntdepts}=0}{}{, }\getdept{\thecntdepts}\stepcounter{cntdepts}}
+    \whiledo{\value{cntdepts}<\value{deptcnt}}{\ifthenelse{\value{cntdepts}=0}{}{\tptext{,} }\tptext{\getdept{\thecntdepts}}\stepcounter{cntdepts}}
 }
 
 \input{rsc/depts/management}
@@ -175,18 +186,21 @@
 % ==========================
 
 % Any spaces on the following lines f*ck up the formatting, so do not format this any other way.
-\newcommand\@authorsfordept[1]{\@makecount{authorsfordeptcnt}\whiledo{\value{authorsfordeptcnt}<\value{alldeptscnt}}{\ifthenelse{\equal{#1}{\getdeptname{\theauthorsfordeptcnt}}}{\getdeptlead{\theauthorsfordeptcnt}, \getdeptpeople{\theauthorsfordeptcnt}}{}\stepcounter{authorsfordeptcnt}}}
+\newcommand\@authorsfordept[1]{\@makecount{authorsfordeptcnt}\whiledo{\value{authorsfordeptcnt}<\value{alldeptscnt}}{\ifthenelse{\equal{#1}{\getdeptname{\theauthorsfordeptcnt}}}{\tptext{\getdeptlead{\theauthorsfordeptcnt},} \getdeptpeople{\theauthorsfordeptcnt}}{}\stepcounter{authorsfordeptcnt}}}
 \newcommand\@defaultauthors{
     \@makecount{defaultauthorscnt}
-    \whiledo{\value{defaultauthorscnt}<\value{deptcnt}}{\ifthenelse{\value{defaultauthorscnt}=0}{}{\\}\ifthenelse{\value{deptcnt}>1}{\textcolor{HyperloopGreen}{\getdept{\thedefaultauthorscnt}}: }{}\@authorsfordept{\getdept{\thedefaultauthorscnt}}\stepcounter{defaultauthorscnt}}
+    \whiledo{\value{defaultauthorscnt}<\value{deptcnt}}{\ifthenelse{\value{defaultauthorscnt}=0}{}{\\}\ifthenelse{\value{deptcnt}>1}{\textcolor{HyperloopGreen}{\tptext{\getdept{\thedefaultauthorscnt}}\tptext{:}} }{}\@authorsfordept{\getdept{\thedefaultauthorscnt}}\stepcounter{defaultauthorscnt}}
 }
-\newcommand\makeauthors{\author{\@defaultauthors}}
 
 \newcommand\@titlepageheader{
     % Title and Author at the top
-    {\Huge \textbf{\@depts} \par}
+    {\tpboldhuge \@depts \par}
     \vspace{1cm} % Adjust space between title and author
-    {\large \@companyandgen \par}
+    {\delfthyperlooplogo{0.4}}
+}
+
+\newcommand\makeauthors{
+    \author{\@defaultauthors}
 }
 
 \newcommand\makeauthorsentireteam{
@@ -296,6 +310,7 @@
     \expandafter\newcommand\expandafter\tpdoclink\expandafter{\@doclink}
     \expandafter\newcommand\expandafter\tpdoclinkfull\expandafter{\@doclinkheader \\ \url{\@doclink}}
     \expandafter\newcommand\expandafter\tplinktomainmatter\expandafter[1]{\hyperref[BeginMainMatter]{##1}}
+    \expandafter\newcommand\expandafter\tplinktotemplateinfo\expandafter[1]{\hyperref[BeginTemplateInfo]{##1}}
     \expandafter\newcommand\expandafter\tpconfdisclaimer\expandafter{\@confdisclaimer}
     \expandafter\newcommand\expandafter\tpabstract\expandafter{\@abstract}
     \expandafter\newcommand\expandafter\tptemplateversionline\expandafter{Template version: \tptexthyperloopgreen{\hyperref[sec:changelog:\@classversion]{\@classversion}} (\tptexthyperloopgreen{\hyperref[sec:how-to-update-template]{update}})}
@@ -331,7 +346,7 @@
     }}}
 }
 
-\newcommand\@usefulsnippetslinks{\hyperref[chapter:useful-snippets]{\color{HyperloopGreen} Useful snippets} (and \hyperref[chapter:useful-snippets-tikz]{\textbf{\color{HyperloopGreen} TikZ}})}
+\newcommand\@usefulsnippetslinks{\@makeusefulsnippetslinkspagefooter}
 
 \newcommand\@onesidedpagestyles{
     \fancypagestyle{ournormal}{
@@ -565,21 +580,17 @@
 % =================================
 % ====== Template guidelines ======
 % =================================
-\newcommand\templateguidelines{
-    \part*{About the \TeX\ \& \LaTeX\ Template
-    \\[\bigskipamount] \large \color{blue} You can uncomment the \textit{final,} line at the top of \textit{main.tex} to remove this. \\ \color{red} If this is your first time using the template, please read through this whole part before changing anything.}
-    \input{rsc/changelog}
-    \input{rsc/guidelines}
-    \input{rsc/how-to-template}
 
-    \chapter*{Useful snippets} \label{chapter:useful-snippets}
-    \addcontentsline{toc-useful-snippets}{chapter}{Useful general \LaTeX\ snippets}
-    \@starttoc{toc-useful-snippets}
-    \newpage
-    
-    \@renderusefultemplates
+\newcommand\tichapter[1]{\chapter*{#1 \markright{#1}}}
 
-    \chapter*{Useful TikZ snippets} \label{chapter:useful-snippets-tikz}
+\newcommand\@makeusefulsnippetslinkspagefooter{\hyperref[chapter:useful-snippets]{\color{HyperloopGreen} Useful snippets} \@makeusefulsnippetslinkspagefootertikz}
+\newcommand\@makeusefulsnippetslinkspagefootertikz{(and \hyperref[chapter:useful-snippets-tikz]{\textbf{\color{HyperloopGreen} TikZ}})}
+
+\newcommand\@includetemplatechangelog{\input{rsc/changelog}}
+\newcommand\@includetemplateguidelines{\input{rsc/guidelines}}
+\newcommand\@includehowtotemplatechapter{\input{rsc/how-to-template}}
+\newcommand\@includeusefultikzsnippets{
+    \tichapter{Useful TikZ snippets} \label{chapter:useful-snippets-tikz}
     \addcontentsline{toc-useful-snippets}{chapter}{Useful TikZ snippets}
     % \addcontentsline{toc-useful-snippets-tikz}{chapter}{Useful TikZ snippets}
 
@@ -608,6 +619,38 @@
     \newpage
     
     \@renderusefultemplatestikz
+}
+\newcommand\@includeusefulsnippets{
+    \tichapter{Useful snippets} \label{chapter:useful-snippets}
+    \addcontentsline{toc-useful-snippets}{chapter}{Useful general \LaTeX\ snippets}
+    \@starttoc{toc-useful-snippets}
+    \newpage
+    
+    \@renderusefultemplates
+
+    \@includeusefultikzsnippets
+}
+
+\newcommand\skiptemplatechangelog{\renewcommand\@includetemplatechangelog{}}
+\newcommand\skiptemplateguidelines{\renewcommand\@includetemplateguidelines{}}
+\newcommand\skiphowtotemplatechapter{\renewcommand\@includehowtotemplatechapter{}}
+\newcommand\skipusefulsnippets{
+    \renewcommand\@includeusefulsnippets{}
+    \renewcommand\@makeusefulsnippetslinkspagefooter{}
+}
+\newcommand\skipusefultikzsnippets{
+    \renewcommand\@includeusefultikzsnippets{}
+    \renewcommand\@makeusefulsnippetslinkspagefootertikz{}
+}
+
+\newcommand\templateinfo{
+    \part*{About the \TeX\ \& \LaTeX\ Template
+    \\[\bigskipamount] \large \color{blue} You can uncomment the \textit{final,} line at the top of \textit{main.tex} to remove this. \\ \color{red} If this is your first time using the template, please read through this whole part before changing anything. \markboth{About the template}{About the template}}
+    \label{BeginTemplateInfo}
+    \@includetemplatechangelog
+    \@includetemplateguidelines
+    \@includehowtotemplatechapter
+    \@includeusefulsnippets
     \vfill
     \begin{center}
     \fontsize{1000}{20}\selectfont \textbf{Finalize the document to remove this.}
