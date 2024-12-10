@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \newcommand\@classname{delft-hyperloop}
-\newcommand\@classversion{2024/12/06}
+\newcommand\@classversion{2024/12/10}
 \ProvidesClass{\@classname}[\@classversion\ Delft Hyperloop Document]
 \newcommand\@templatelink{https://www.overleaf.com/read/xkdvnhndtwwg\#fadb5a}
 
@@ -90,6 +90,7 @@
 \RequirePackage[outline]{contour}
 \RequirePackage{xparse}
 \RequirePackage{setspace}
+\RequirePackage{multicol}
 
 % TikZ
 \RequirePackage{tikz}
@@ -359,7 +360,7 @@
       \fancyfoot[C]{\@companyandgen}
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
     
-      \fancyhead[R]{\nouppercase{\leftmark\hfill\rightmark}}
+      \fancyhead[R]{\small \nouppercase{\leftmark\hfill\rightmark}}
     }
     
     \pagestyle{ournormal}
@@ -384,8 +385,8 @@
       \fancyfoot[LO,RE]{\ifnotfinal{\@usefulsnippetslinks}}
       \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
     
-      \fancyhead[LE]{\nouppercase{\rightmark\hfill\leftmark}}
-      \fancyhead[RO]{\nouppercase{\leftmark\hfill\rightmark}}
+      \fancyhead[LE]{\small \nouppercase{\rightmark\hfill\leftmark}}
+      \fancyhead[RO]{\small \nouppercase{\leftmark\hfill\rightmark}}
     }
     
     \pagestyle{ournormal}

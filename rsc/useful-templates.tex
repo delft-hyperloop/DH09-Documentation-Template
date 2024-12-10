@@ -117,16 +117,45 @@
 \end{filecontents*}
 \@defusefultemplate{Table}
 
-\begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
-\end{filecontents*}
-\@defusefultemplate{A3 (vertical)}
+% \begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+% \afterpage{
+% \KOMAoptions{paper=A3,paper=landscape,pagesize}
+% \recalctypearea
+% % here your figure/text
+
+% \clearpage
+% \KOMAoptions{paper=A4,pagesize}
+
+% \recalctypearea
+% }
+% \restoregeometry
+% \end{filecontents*}
+% \@defusefultemplate{A3 (vertical)}
 
 
-\begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
-\end{filecontents*}
-\@defusefultemplate{A3 (horizontal)}
+% \begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+% \afterpage{
+% \KOMAoptions{paper=A3,paper=landscape,pagesize}
+% \recalctypearea
+% % here your figure/text
+
+% \clearpage
+% \KOMAoptions{paper=A4,pagesize}
+
+% \recalctypearea
+% }
+% \restoregeometry
+% \end{filecontents*}
+% \@defusefultemplate{A3 (horizontal)}
 
 \begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+\begin{multicols}{2}
+\section*{First Section}
+\lipsum[1]
+
+\section*{Second Section}
+\lipsum[2]
+\end{multicols}
 \end{filecontents*}
 \@defusefultemplate{2 columns}
 
