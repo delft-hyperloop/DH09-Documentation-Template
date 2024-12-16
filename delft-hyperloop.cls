@@ -249,8 +249,9 @@
 
 \newcommand\@inclwallpaper[1]{
     \AddToShipoutPicture*{
-    \put(0,-75mm){%
-    \includegraphics[width=\paperwidth,keepaspectratio]{#1}}%
+    \put(0,0){%
+    \includegraphics[width=\paperwidth,height=\paperheight]{#1}}%
+    % \includegraphics[width=\paperwidth,keepaspectratio]{#1}}%
     }
 }
 
@@ -317,20 +318,20 @@
 }
 
 \renewcommand\maketitle{
-    \savegeometry{normal}
-    \newgeometry{layoutwidth=210mm,layoutheight=372mm,left=30mm,right=30mm,bottom=20mm,top=40mm}
-    \savegeometry{Layouttitlepage}
+    % \savegeometry{normal}
+    % \newgeometry{layoutwidth=210mm,layoutheight=372mm,left=30mm,right=30mm,bottom=20mm,top=40mm}
+    % \savegeometry{Layouttitlepage}
 
     \begin{titlepage}
-        \pdfpagewidth=210mm \pdfpageheight=372mm % for PDF output
-        \paperwidth=210mm \paperheight=372mm     % for TikZ
-        \loadgeometry{Layouttitlepage}
+        % \pdfpagewidth=210mm \pdfpageheight=372mm % for PDF output
+        % \paperwidth=210mm \paperheight=372mm     % for TikZ
+        % \loadgeometry{Layouttitlepage}
 
         \@deftpcommands
         \@titlebody
     \end{titlepage}
 
-    \loadgeometry{normal}
+    % \loadgeometry{normal}
 }
 
 % ===========================================
