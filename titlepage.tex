@@ -29,22 +29,16 @@
 %
 % If \makeauthorsentireteam was used, then it is just the
 % name of the team.
-\tpheader
+% \tpheader
 
-\vspace{0.5cm} % Adjust space between author and green lines
-
-% First green line
-\textcolor{HyperloopGreen}{\rule{\textwidth}{1.5pt}}
-
-\vspace{0.5cm} % Space between line and title
-% Main title in the center
+\vspace{0.5cm}
 
 {\tpboldLARGE \tptext{\tpdoctitle}}
+% {\tpboldLARGE \contour{black}{\tpdoctitle}}
 
 
-\vspace{0.5cm} % Space between title and second green line
-% Second green line
-\textcolor{HyperloopGreen}{\rule{\textwidth}{1.5pt}}
+\vspace{2.6cm}
+\delfthyperlooplogo{0.55}
 
 % Detailed author info.
 %
@@ -57,11 +51,11 @@
 % authors passed to it.
 {\tplarge \tpdocauthorinfo \par}
 
-\vspace{1.2cm}
+\vspace{3cm}
 
 % The date
 {\tplarge \tptext{\tpdocdate} \par}
-\vspace{0.3cm}
+\vspace{4cm}
 
 % The box with the links in the middle
 \ifnotfinal{
@@ -77,7 +71,7 @@
 
             \vspace{0.3cm}
 
-            % Makes a clickable link which you can use to jump directly to the main matter.
+            % Makes a clickable link which you can use to jump directly to the template info & guidelines.
             % The argument is the text of the link.
             \tptext{\tplinktotemplateinfo{Jump to the \textcolor{HyperloopGreen}{Template info \& guidelines}}}
         }
@@ -91,7 +85,7 @@
 {\tpboldlarge \tptext{\tpconfdisclaimer}}
 
 % Add the abstract, if any
-% {\tptext{\tpabstract}}
+{\tptext{\tpabstract}}
 
 \vfill
 \ifnotfinal{\tptext{\tptemplateversionline}}

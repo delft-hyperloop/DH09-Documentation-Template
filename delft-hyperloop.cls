@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \newcommand\@classname{delft-hyperloop}
-\newcommand\@classversion{2024/12/10}
+\newcommand\@classversion{2024/12/16}
 \ProvidesClass{\@classname}[\@classversion\ Delft Hyperloop Document]
 \newcommand\@templatelink{https://www.overleaf.com/read/xkdvnhndtwwg\#fadb5a}
 
@@ -12,6 +12,10 @@
 
 \DeclareOption{book}{\renewcommand\@baseclass{book}}
 \DeclareOption{report}{\renewcommand\@baseclass{report}}
+
+% \DeclareOption{scrbook}{\renewcommand\@baseclass{scrbook}}
+% \DeclareOption{scrreprt}{\renewcommand\@baseclass{scrreprt}}
+
 \DeclareOption{final}{
     \renewcommand\@final{true}
     \renewcommand\iffinalelse[2]{#1}
@@ -51,7 +55,7 @@
     \newcommand\@rightmargin{1.25in}
 }
 
-\RequirePackage[a4paper,top=1in,bottom=1in,left=\@leftmargin,right=\@rightmargin,marginparwidth=\@marginparwidth]{geometry}
+\RequirePackage[a4paper,top=1in,bottom=3cm,left=\@leftmargin,right=\@rightmargin,marginparwidth=\@marginparwidth,footskip=2cm]{geometry}
 
 \RequirePackage[english]{babel}
 \RequirePackage{array}
@@ -225,12 +229,11 @@
 % ========================
 
 \ifthenelse{\equal{\@baseclass}{book}}{
-    \newcommand\@makeabstract[1]{}
+    \newcommand\@abstract{}
     \newcommand\abstract[1]{}
 }{
     \newcommand\@abstract{}
     \renewcommand\abstract[1]{\renewcommand\@abstract{#1}}
-    \newcommand\makeabstract{\@abstract}
 }
 
 % =====================================
@@ -246,13 +249,8 @@
 
 \newcommand\@inclwallpaper[1]{
     \AddToShipoutPicture*{
-    \put(0,0){%
-    \parbox[b][\paperheight]{\paperwidth}{%
-    \vfill
-    \centering
-    {\transparent{0.9} \includegraphics[width=\paperwidth,height=\paperheight]{#1}}%
-    \vfill
-    }}
+    \put(0,-75mm){%
+    \includegraphics[width=\paperwidth,keepaspectratio]{#1}}%
     }
 }
 
@@ -319,10 +317,29 @@
 }
 
 \renewcommand\maketitle{
+    \savegeometry{normal}
+    \newgeometry{layoutwidth=210mm,layoutheight=372mm,left=30mm,right=30mm,bottom=20mm,top=40mm}
+    \savegeometry{Layouttitlepage}
+
     \begin{titlepage}
+        \pdfpagewidth=210mm \pdfpageheight=372mm % for PDF output
+        \paperwidth=210mm \paperheight=372mm     % for TikZ
+        \loadgeometry{Layouttitlepage}
+
         \@deftpcommands
         \@titlebody
     \end{titlepage}
+
+    \loadgeometry{normal}
+}
+
+% ===========================================
+% =========== Table of contents =============
+% ===========================================
+
+\renewcommand\tableofcontents{
+    \chapter*{Table of Contents}
+    \@starttoc{toc}
 }
 
 % ==========================
@@ -356,9 +373,8 @@
       \fancyhead[C]{\textbf{\@title}}
       \fancyfoot{} % clear all footer fields
       \fancyfoot[L]{\ifnotfinal{\@usefulsnippetslinks}}
-      \fancyfoot[R]{\@pageidx}
-      \fancyfoot[C]{\@companyandgen}
-      \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
+      \fancyfoot[C]{\@pageidx}
+      \renewcommand\footrulewidth{0pt}% Line at the footer visible
     
       \fancyhead[R]{\small \nouppercase{\leftmark\hfill\rightmark}}
     }
@@ -367,23 +383,27 @@
     
     \fancypagestyle{plain}{%
       \fancyhf{}%
-      \fancyfoot[R]{\@pageidx}
-      \fancyfoot[C]{\@companyandgen}
+      \fancyfoot[C]{\@pageidx}
       \fancyfoot[L]{\ifnotfinal{\@usefulsnippetslinks}}
       \renewcommand\headrulewidth{0pt}% Line at the header invisible
-      \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
+      \renewcommand\footrulewidth{0pt}% Line at the footer visible
+    }
+
+    \newcommand\initpagestyles{
+        \AddToShipoutPictureBG{
+            \AtPageLowerLeft{\includegraphics[width=\paperwidth,keepaspectratio]{rsc/footer.png}}%
+        }
     }
 }
 \newcommand\@twosidedpagestyles{
     \fancypagestyle{ournormal}{
       %... then configure it.
       \fancyhead{} % clear all header fields
-      \fancyhead[RO,LE]{\textbf{\@title}}
+      \fancyhead[C]{\textbf{\@title}}
       \fancyfoot{} % clear all footer fields
-      \fancyfoot[LE,RO]{\@pageidx}
-      \fancyfoot[C]{\@companyandgen}
-      \fancyfoot[LO,RE]{\ifnotfinal{\@usefulsnippetslinks}}
-      \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
+      \fancyfoot[C]{\@pageidx}
+      \fancyfoot[L]{\ifnotfinal{\@usefulsnippetslinks}}
+      \renewcommand\footrulewidth{0pt}% Line at the footer visible
     
       \fancyhead[LE]{\small \nouppercase{\rightmark\hfill\leftmark}}
       \fancyhead[RO]{\small \nouppercase{\leftmark\hfill\rightmark}}
@@ -393,17 +413,26 @@
     
     \fancypagestyle{plain}{%
       \fancyhf{}%
-      \fancyfoot[LE,RO]{\@pageidx}
-      \fancyfoot[C]{\@companyandgen}
-      \fancyfoot[LO,RE]{\ifnotfinal{\@usefulsnippetslinks}}
+      \fancyfoot[C]{\@pageidx}
+      \fancyfoot[L]{\ifnotfinal{\@usefulsnippetslinks}}
       \renewcommand\headrulewidth{0pt}% Line at the header invisible
-      \renewcommand\footrulewidth{0.4pt}% Line at the footer visible
+      \renewcommand\footrulewidth{0pt}% Line at the footer visible
+    }
+
+    \newcommand\initpagestyles{
+        \AddToShipoutPictureBG{
+            \AtPageLowerLeft{\includegraphics[width=\paperwidth,keepaspectratio]{rsc/footer.png}}%
+        }
     }
 }
 
 \ifthenelse{\equal{\@baseclass}{book}}{\@twosidedpagestyles}{
-    \ifthenelse{\equal{\@baseclass}{report}}{\@onesidedpagestyles}{
-        \@error{Unrecognized baseclass: "\@baseclass"}
+    \ifthenelse{\equal{\@baseclass}{scrbook}}{\@twosidedpagestyles}{
+        \ifthenelse{\equal{\@baseclass}{report}}{\@onesidedpagestyles}{
+            \ifthenelse{\equal{\@baseclass}{scrreprt}}{\@onesidedpagestyles}{
+                \@error{Unrecognized baseclass: "\@baseclass"}
+            }
+        }
     }
 }
 
@@ -573,9 +602,6 @@
 % =====================
 \newcommand\addgloss[2]{\newglossaryentry{#1}{name=#1,description={#2}}}
 \newcommand\addglossmath[3]{\newglossaryentry{#3}{name=\ensuremath{#1},description={#2}}}
-
-
-
 
 
 % =================================

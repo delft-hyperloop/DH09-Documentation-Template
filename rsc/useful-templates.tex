@@ -59,15 +59,13 @@
     \begin{subfigure}{0.3\textwidth}
     \centering
     \includegraphics[width=\textwidth]{example-image-a} % Don't adjust this width
-    \caption{Caption A.}            % Caption for the subfigure
-    \label{subfig:subfig-example-a} % Label for the subfigure
+    \caption{Caption A.} \label{subfig:subfig-example-a}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.3\textwidth}
     \centering
     \includegraphics[width=\textwidth]{example-image-b}
-    \caption{Caption B.}
-    \label{subfig:subfig-example-b}
+    \caption{Caption B.} \label{subfig:subfig-example-b}
     \end{subfigure}
     \hfill 
     \begin{subtable}[b]{0.3\textwidth}
@@ -78,11 +76,9 @@
         G & H & I   \\
         \hhline{===}
         \end{tabular}
-        \caption{Caption C}
-      \label{table:table}
+        \caption{Caption C} \label{table:table}
   \end{subtable}
-\caption{Caption for all sub-figures.}  % Caption for the figure as a whole
-\label{fig:subfig-example}              % Label for the figure as a whole
+  \caption{Caption for all sub-figures.} \label{fig:subfig-example}
 \end{figure}
 \end{filecontents*}
 \@defusefultemplate{3 Subfigures (can be images or tables)}
@@ -158,4 +154,13 @@
 \end{multicols}
 \end{filecontents*}
 \@defusefultemplate{2 columns}
+
+\begin{filecontents*}{__useful_templates-\theusefultemplate.tex}
+\ifnotfinal{
+    This text only appears while the document is a draft,
+    and won't be there after you uncomment out the
+    \textit{final,} line at the top of \textit{main.tex}.
+}
+\end{filecontents*}
+\@defusefultemplate{Draft-only content}
 
